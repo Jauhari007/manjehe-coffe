@@ -50,7 +50,7 @@
         
         <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
             <div class="hero-badge">
-                <span><i class="fas fa-star"></i> Premium Quality Since 2020</span>
+                <span><i class="fas fa-star"></i> Premium Quality Since 2016</span>
             </div>
             <h1>
                 <span class="highlight">Coffee</span>
@@ -94,12 +94,12 @@
                 <div class="about-text" data-aos="fade-right">
                     <div class="text-block">
                         <h3>Our Philosophy</h3>
-                        <p>Coffee Manjehe lahir dari passion untuk menghadirkan pengalaman kopi yang tak terlupakan. Setiap cangkir yang kami sajikan adalah hasil dari dedikasi tinggi terhadap kualitas dan inovasi.</p>
+                        <p>Kopi Manjehe bukan sekadar minuman, ia adalah warisan rasa yang lahir dari kesederhanaan. Biji-biji pilihan disangrai dengan wajan besi dan kayu bakar, sebuah metode tradisional yang diwariskan turun-temurun. Api yang membara dari kayu bukan hanya memberikan panas, tapi juga menghadirkan aroma otentik yang tak bisa ditiru oleh mesin modern.</p>
                     </div>
                     
                     <div class="text-block">
                         <h3>Premium Quality</h3>
-                        <p>Kami memilih biji kopi terbaik langsung dari perkebunan Kampunganyar-Banyuwangi, kemudian memprosesnya dengan teknologi tradisional dan teknik roasting yang sempurna untuk menghasilkan cita rasa yang khas.</p>
+                        <p>Kami memilih biji kopi terbaik langsung dari perkebunan rakyat Kampunganyar-Banyuwangi, Setiap biji Kopi Manjehe diperlakukan dengan ketelitian dan kesabaran, menghadirkan kualitas premium yang tak hanya memanjakan lidah, tapi juga menghidupkan jiwa</p>
                     </div>
                     
                     <div class="stats-grid">
@@ -162,17 +162,17 @@
                     </div>
                     <div class="product-info">
                         <div class="product-category">Hot Coffee</div>
-                        <h3>Espresso Manjehe</h3>
-                        <p>Bold dan aromatic espresso dengan rasa yang intense. Perfect untuk memulai hari dengan energi maksimal.</p>
+                        <h3>Exselsa</h3>
+                        <p>Bold dan aromatic exselsa dengan rasa yang intense. Perfect untuk memulai hari dengan energi maksimal.</p>
                         <div class="product-features">
                             <span><i class="fas fa-star"></i> Premium Quality</span>
                             <span><i class="fas fa-fire"></i> Strong Taste</span>
                         </div>
                         <div class="product-bottom">
                             <div class="price">
-                                <span class="current-price">Rp 35.000</span>
+                                <span class="current-price">Rp 60.000</span>
                             </div>
-                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Espresso%20Manjehe%20" class="whatsapp-btn" target="_blank">
+                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Exselsa%20" class="whatsapp-btn" target="_blank">
                                 <i class="fab fa-whatsapp"></i>
                                 <span>Order Now</span>
                             </a>
@@ -199,7 +199,7 @@
                         </div>
                         <div class="product-bottom">
                             <div class="price">
-                                <span class="current-price">Rp 28.000</span>
+                                <span class="current-price">Rp 250.000</span>
                             </div>
                             <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Luwak%20Arabica%20" class="whatsapp-btn" target="_blank">
                                 <i class="fab fa-whatsapp"></i>
@@ -228,7 +228,7 @@
                         </div>
                         <div class="product-bottom">
                             <div class="price">
-                                <span class="current-price">Rp 32.000</span>
+                                <span class="current-price">Rp 70.000</span>
                             </div>
                             <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Arabica%20" class="whatsapp-btn" target="_blank">
                                 <i class="fab fa-whatsapp"></i>
@@ -257,7 +257,7 @@
                         </div>
                         <div class="product-bottom">
                             <div class="price">
-                                <span class="current-price">Rp 40.000</span>
+                                <span class="current-price">Rp 80.000</span>
                             </div>
                             <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Kopi%20Arabica%20Lanang%20" class="whatsapp-btn" target="_blank">
                                 <i class="fab fa-whatsapp"></i>
@@ -286,7 +286,7 @@
                         </div>
                         <div class="product-bottom">
                             <div class="price">
-                                <span class="current-price">Rp 38.000</span>
+                                <span class="current-price">Rp 50.000</span>
                             </div>
                             <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Kopi%20Robusta%20" class="whatsapp-btn" target="_blank">
                                 <i class="fab fa-whatsapp"></i>
@@ -316,7 +316,7 @@
                         </div>
                         <div class="product-bottom">
                             <div class="price">
-                                <span class="current-price">Rp 45.000</span>
+                                <span class="current-price">Rp 60.000</span>
                             </div>
                             <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20House%20Blend%20" class="whatsapp-btn" target="_blank">
                                 <i class="fab fa-whatsapp"></i>
@@ -345,7 +345,7 @@
                         </div>
                         <div class="product-bottom">
                             <div class="price">
-                                <span class="current-price">Rp 42.000</span>
+                                <span class="current-price">Rp 60.000</span>
                             </div>
                             <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Robusta%20Lanang%20" class="whatsapp-btn" target="_blank">
                                 <i class="fab fa-whatsapp"></i>
