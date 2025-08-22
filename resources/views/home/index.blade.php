@@ -436,22 +436,17 @@
         
         <div class="video-container">
             <div class="video-wrapper">
-                <div class="video-thumbnail" onclick="playVideo(this)">
-                    <i class="fas fa-play-circle"></i>
-                    <div class="video-overlay">
-                        <h3>Coffee Manjehe Review</h3>
-                        <p>Pengalaman luar biasa dengan Coffee Manjehe</p>
-                    </div>
+                <div class="video-player" data-video-id="3Ah5Jon9MiQ">
+                    <picture>
+                        <img class="video-thumb" src="https://i.ytimg.com/vi/3Ah5Jon9MiQ/hqdefault.jpg" alt="Coffee Manjehe Review" loading="lazy">
+                    </picture>
+                    <button class="video-play-btn" aria-label="Play video">
+                        <span class="play-icon">▶</span>
+                    </button>
+                    <noscript>
+                        <a href="https://www.youtube.com/watch?v=3Ah5Jon9MiQ" target="_blank" rel="noopener" style="color:#fff;">Watch on YouTube</a>
+                    </noscript>
                 </div>
-                <iframe 
-                    width="100%" 
-                    height="100%" 
-                    src="https://www.youtube.com/embed/3Ah5Jon9MiQ?si=USRzTFiL9d3DN0CL" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen></iframe>
             </div>
             
             <div class="video-info">
@@ -630,6 +625,7 @@ function initializeWebsite() {
     initBackToTop();
     initSmoothScroll();
     initMobileMenu();
+    initVideoPlayer();
     
     // Add loading complete listener
     window.addEventListener('load', handlePageLoad);
@@ -2202,5 +2198,54 @@ if (typeof module !== 'undefined' && module.exports) {
     };
 }
 }
+
+// ===== VIDEO PLAYER (Lazy YouTube) =====
+function initVideoPlayer(){
+    const wrapper = document.querySelector('.video-player');
+    if(!wrapper) return;
+    const btn = wrapper.querySelector('.video-play-btn');
+    btn.addEventListener('click', () => {
+        const id = wrapper.getAttribute('data-video-id');
+        const iframe = document.createElement('iframe');
+        iframe.setAttribute('allowfullscreen','');
+        iframe.setAttribute('title','Coffee Manjehe Review');
+        iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        iframe.setAttribute('frameborder', '0');
+        iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`; 
+        iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;z-index:3;background:#000;';
+        
+        wrapper.classList.add('playing');
+        // hide controls instead of clearing to preserve aspect ratio
+        const thumb = wrapper.querySelector('.video-thumb');
+        if(thumb) thumb.style.display='none';
+        btn.style.display='none';
+        wrapper.appendChild(iframe);
+        
+        // Ensure iframe is loaded and visible
+        iframe.onload = function() {
+            console.log('Video iframe loaded successfully');
+            iframe.style.opacity = '1';
+        };
+        iframe.style.opacity = '0';
+        setTimeout(() => {
+            iframe.style.opacity = '1';
+            iframe.style.transition = 'opacity 0.3s';
+        }, 100);
+    });
+}
 </script>
+@endpush
+
+@push('styles')
+<style>
+.video-wrapper{position:relative;}
+.video-player{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:20px;box-shadow:0 0 40px #000a;background:#111;cursor:pointer;}
+.video-player .video-thumb{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;filter:brightness(.7);transition:.4s;z-index:1;}
+.video-player:hover .video-thumb{filter:brightness(.5);} 
+.video-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.55);border:2px solid #d4af7a;color:#d4af7a;font-size:3rem;line-height:1;border-radius:50%;width:90px;height:90px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:.3s;z-index:2;}
+.video-play-btn:hover{background:#d4af7a;color:#111;}
+.video-player.playing{padding-bottom:56.25%;height:0;cursor:default;background:#000;}
+.video-player.playing iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;z-index:3;}
+@media (max-width:768px){.video-play-btn{width:70px;height:70px;font-size:2.2rem}}
+</style>
 @endpush
