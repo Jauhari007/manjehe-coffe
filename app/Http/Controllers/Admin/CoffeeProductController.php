@@ -9,9 +9,38 @@ use Illuminate\Support\Facades\Validator;
 
 class CoffeeProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = CoffeeProduct::orderBy('created_at', 'desc')->paginate(10);
+        $query = CoffeeProduct::query();
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%');
+        }
+
+        // Category filter
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // Status filter
+        if ($request->filled('status')) {
+            switch ($request->status) {
+                case 'active':
+                    $query->where('is_active', true);
+                    break;
+                case 'inactive':
+                    $query->where('is_active', false);
+                    break;
+                case 'featured':
+                    $query->where('is_featured', true);
+                    break;
+            }
+        }
+
+        $products = $query->orderBy('created_at', 'desc')->paginate(10);
+        
         return view('admin.products.index', compact('products'));
     }
 

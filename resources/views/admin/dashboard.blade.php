@@ -1,4 +1,3 @@
-{{-- File: resources/views/admin/dashboard.blade.php --}}
 @extends('layouts.admin')
 
 @section('title', 'Dashboard - Coffee Manjehe Admin')
@@ -9,45 +8,226 @@
     <!-- Stats Cards -->
     <div class="row mb-4">
         <div class="col-lg-3 col-md-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon">
-                    <i class="fas fa-coffee"></i>
-                </div>
-                <div class="stats-content">
-                    <h3 class="text-white">{{ $totalProducts }}</h3>
-                    <p class="text-muted mb-0">Total Produk</p>
-                    <small class="text-success">
-                        <i class="fas fa-arrow-up"></i> {{ $activeProducts }} Aktif
-                    </small>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon bg-success">
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="stats-content">
-                    <h3 class="text-white">{{ $featuredProducts }}</h3>
-                    <p class="text-muted mb-0">Produk Unggulan</p>
-                    <small class="text-info">
-                        <i class="fas fa-crown"></i> Best Sellers
-                    </small>
+            <div class="card bg-gradient-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-1">{{ $stats['total_products'] }}</h3>
+                            <p class="mb-0">Total Produk</p>
+                            <small class="text-white-50">
+                                <i class="fas fa-arrow-up"></i> {{ $stats['active_products'] }} Aktif
+                            </small>
+                        </div>
+                        <div class="text-white-50">
+                            <i class="fas fa-coffee fa-2x"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="col-lg-3 col-md-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon bg-info">
-                    <i class="fas fa-envelope"></i>
+            <div class="card bg-gradient-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-1">{{ $stats['featured_products'] }}</h3>
+                            <p class="mb-0">Produk Unggulan</p>
+                            <small class="text-white-50">
+                                <i class="fas fa-crown"></i> Best Sellers
+                            </small>
+                        </div>
+                        <div class="text-white-50">
+                            <i class="fas fa-star fa-2x"></i>
+                        </div>
+                    </div>
                 </div>
-                <div class="stats-content">
-                    <h3 class="text-white">{{ $totalMessages }}</h3>
-                    <p class="text-muted mb-0">Total Pesan</p>
-                    <small class="text-warning">
-                        <i class="fas fa-bell"></i> {{ $unreadMessages }} Belum dibaca
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-gradient-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-1">{{ $stats['hot_coffee'] }}</h3>
+                            <p class="mb-0">Kopi Panas</p>
+                            <small class="text-white-50">
+                                <i class="fas fa-fire"></i> Hot Coffee
+                            </small>
+                        </div>
+                        <div class="text-white-50">
+                            <i class="fas fa-thermometer-three-quarters fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-gradient-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-1">{{ $stats['cold_coffee'] }}</h3>
+                            <p class="mb-0">Kopi Dingin</p>
+                            <small class="text-white-50">
+                                <i class="fas fa-snowflake"></i> Cold Coffee
+                            </small>
+                        </div>
+                        <div class="text-white-50">
+                            <i class="fas fa-cube fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Recent Products -->
+        <div class="col-lg-8 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-coffee me-2"></i>
+                        Produk Terbaru
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if($recent_products->count() > 0)
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Produk</th>
+                                        <th>Kategori</th>
+                                        <th>Harga</th>
+                                        <th>Status</th>
+                                        <th>Ditambahkan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($recent_products as $product)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="{{ $product->icon }} me-2 text-primary"></i>
+                                                    <strong>{{ $product->name }}</strong>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-secondary">
+                                                    {{ ucfirst($product->category) }}
+                                                </span>
+                                            </td>
+                                            <td>{{ $product->formatted_price }}</td>
+                                            <td>
+                                                @if($product->is_active)
+                                                    <span class="badge bg-success">Aktif</span>
+                                                @else
+                                                    <span class="badge bg-danger">Nonaktif</span>
+                                                @endif
+                                                @if($product->is_featured)
+                                                    <span class="badge bg-warning">Unggulan</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $product->created_at->diffForHumans() }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="{{ route('admin.products.index') }}" class="btn btn-primary">
+                                <i class="fas fa-eye me-2"></i>
+                                Lihat Semua Produk
+                            </a>
+                        </div>
+                    @else
+                        <div class="text-center py-4">
+                            <i class="fas fa-coffee fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">Belum ada produk</h5>
+                            <p class="text-muted">Mulai dengan menambahkan produk kopi pertama Anda.</p>
+                            <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>
+                                Tambah Produk
+                            </a>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-bolt me-2"></i>
+                        Aksi Cepat
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>
+                            Tambah Produk Baru
+                        </a>
+                        <a href="{{ route('admin.products.index') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-list me-2"></i>
+                            Kelola Produk
+                        </a>
+                        <a href="{{ route('home') }}" class="btn btn-outline-success" target="_blank">
+                            <i class="fas fa-external-link-alt me-2"></i>
+                            Lihat Website
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Overview -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-pie me-2"></i>
+                        Kategori Produk
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>Kopi Panas</span>
+                            <strong>{{ $stats['hot_coffee'] }}</strong>
+                        </div>
+                        <div class="progress mb-3" style="height: 8px;">
+                            <div class="progress-bar bg-danger" style="width: {{ $stats['total_products'] > 0 ? ($stats['hot_coffee'] / $stats['total_products']) * 100 : 0 }}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>Kopi Dingin</span>
+                            <strong>{{ $stats['cold_coffee'] }}</strong>
+                        </div>
+                        <div class="progress mb-3" style="height: 8px;">
+                            <div class="progress-bar bg-info" style="width: {{ $stats['total_products'] > 0 ? ($stats['cold_coffee'] / $stats['total_products']) * 100 : 0 }}%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>Biji Kopi</span>
+                            <strong>{{ $stats['coffee_beans'] }}</strong>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-warning" style="width: {{ $stats['total_products'] > 0 ? ($stats['coffee_beans'] / $stats['total_products']) * 100 : 0 }}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
                     </small>
                 </div>
             </div>
@@ -85,7 +265,7 @@
                         </a>
                     </div>
                     
-                    @if($recentProducts->count() > 0)
+                    @if($recent_products->count() > 0)
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -98,7 +278,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($recentProducts as $product)
+                                    @foreach($recent_products as $product)
                                         <tr>
                                             <td>
                                                 <div class="d-flex align-items-center">

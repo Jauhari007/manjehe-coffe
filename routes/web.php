@@ -13,13 +13,16 @@ Route::post('/contact', [HomeController::class, 'contact'])->name('contact.store
 
 // Admin Authentication Routes
 Route::prefix('admin')->name('admin.')->group(function () {
-    // Guest routes
-    Route::middleware('guest:admin')->group(function () {
-        Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [AdminAuthController::class, 'login']);
+    // Redirect /admin to /admin/login
+    Route::get('/', function () {
+        return redirect()->route('admin.login');
     });
     
-    // Authenticated routes
+    // Login routes (accessible to everyone) - Laravel 12 style
+    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login']);
+    
+    // Authenticated routes (perlu login admin) - Laravel 12 auth middleware
     Route::middleware('auth:admin')->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

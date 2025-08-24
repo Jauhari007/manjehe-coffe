@@ -12,6 +12,11 @@ class AdminAuthController extends Controller
 {
     public function showLoginForm()
     {
+        // Laravel 12 - check if already authenticated
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        
         return view('admin.auth.login');
     }
 
@@ -22,8 +27,11 @@ class AdminAuthController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::guard('admin')->attempt($credentials, $request->remember)) {
+        // Laravel 12 - improved authentication attempt
+        if (Auth::guard('admin')->attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
+            
+            // Laravel 12 - redirect to intended or default dashboard
             return redirect()->intended(route('admin.dashboard'));
         }
 

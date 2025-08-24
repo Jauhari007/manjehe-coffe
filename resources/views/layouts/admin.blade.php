@@ -6,18 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Coffee Manjehe Admin')</title>
     
-    <!-- CSS -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    
     <!-- Custom Admin CSS -->
-    <style>
-        :root {
-            --admin-primary: #D4A574;
-            --admin-secondary: #8B4513;
-            --admin-dark: #1a1a1a;
-            --admin-darker: #0f0f0f;
+    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+    
+    @stack('styles')
             --admin-success: #10b981;
             --admin-warning: #f59e0b;
             --admin-error: #ef4444;
@@ -371,6 +367,35 @@
         setTimeout(function() {
             $('.alert').fadeOut('slow');
         }, 5000);
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
+        // Sidebar Toggle for Mobile
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('show');
+        }
+
+        // Auto-hide alerts after 5 seconds
+        setTimeout(function() {
+            $('.alert').fadeOut('slow');
+        }, 5000);
+
+        // Confirm delete actions
+        $(document).on('click', '.btn-delete', function(e) {
+            if (!confirm('Apakah Anda yakin ingin menghapus item ini?')) {
+                e.preventDefault();
+            }
+        });
+
+        // Loading state for buttons
+        $(document).on('click', '.btn-loading', function() {
+            const btn = $(this);
+            btn.prop('disabled', true);
+            btn.html('<span class="spinner-border spinner-border-sm me-2"></span>Loading...');
+        });
         
         // Confirm delete
         function confirmDelete(form) {

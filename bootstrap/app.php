@@ -11,7 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Laravel 12 - built-in auth middleware sudah mendukung multi-guard
+        // Tidak perlu custom middleware lagi
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
