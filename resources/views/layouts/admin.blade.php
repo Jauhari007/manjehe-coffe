@@ -13,7 +13,12 @@
     <!-- Custom Admin CSS -->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     
-    @stack('styles')
+    <style>
+        :root {
+            --admin-primary: #D4A574;
+            --admin-secondary: #8B4513;
+            --admin-dark: #2D1810;
+            --admin-darker: #1A0F0A;
             --admin-success: #10b981;
             --admin-warning: #f59e0b;
             --admin-error: #ef4444;
@@ -50,6 +55,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            font-weight: 700;
         }
         
         .nav-item {
@@ -66,6 +72,7 @@
         
         .nav-item a {
             color: #d1d5db;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
         
@@ -100,16 +107,24 @@
             box-shadow: 0 8px 25px rgba(212, 165, 116, 0.3);
         }
         
+        .btn-success {
+            background: linear-gradient(135deg, var(--admin-success), #059669);
+            border: none;
+        }
+        
         .btn-danger {
             background: linear-gradient(135deg, var(--admin-error), #dc2626);
+            border: none;
         }
         
         .btn-warning {
             background: linear-gradient(135deg, var(--admin-warning), #d97706);
+            border: none;
         }
         
-        .btn-success {
-            background: linear-gradient(135deg, var(--admin-success), #059669);
+        .btn-info {
+            background: linear-gradient(135deg, var(--admin-info), #1e40af);
+            border: none;
         }
         
         .alert {
@@ -206,12 +221,20 @@
             border: 1px solid rgba(212, 165, 116, 0.3);
         }
         
+        .badge-info {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
         .stats-card {
             background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(139, 69, 19, 0.05));
             border: 1px solid rgba(212, 165, 116, 0.2);
             border-radius: 16px;
             padding: 1.5rem;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
         .stats-card:hover {
@@ -233,6 +256,11 @@
             margin-bottom: 1rem;
         }
         
+        .stats-content {
+            position: relative;
+            z-index: 2;
+        }
+        
         .dropdown-menu {
             background: var(--admin-dark);
             border: 1px solid rgba(212, 165, 116, 0.2);
@@ -248,6 +276,19 @@
         .dropdown-item:hover {
             background: rgba(212, 165, 116, 0.1);
             color: var(--admin-primary);
+        }
+        
+        /* Logout link fix */
+        .dropdown-item.text-danger {
+            color: #dc3545 !important;
+            cursor: pointer !important;
+            z-index: 10 !important;
+            position: relative;
+            pointer-events: auto !important;
+        }
+        .dropdown-item.text-danger:hover, .dropdown-item.text-danger:focus {
+            background: rgba(220, 53, 69, 0.1) !important;
+            color: #dc3545 !important;
         }
     </style>
     
@@ -317,14 +358,10 @@
                                 <i class="fas fa-cog me-2"></i>Settings
                             </a>
                         </li>
-                        <li><hr class="dropdown-divider"></li>
                         <li>
-                            <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-danger">
-                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
-                                </button>
-                            </form>
+                            <a href="#" class="dropdown-item text-danger" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin keluar dari admin panel?')) document.getElementById('logout-form').submit();">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -367,22 +404,7 @@
         setTimeout(function() {
             $('.alert').fadeOut('slow');
         }, 5000);
-    
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <script>
-        // Sidebar Toggle for Mobile
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('show');
-        }
-
-        // Auto-hide alerts after 5 seconds
-        setTimeout(function() {
-            $('.alert').fadeOut('slow');
-        }, 5000);
-
+        
         // Confirm delete actions
         $(document).on('click', '.btn-delete', function(e) {
             if (!confirm('Apakah Anda yakin ingin menghapus item ini?')) {
@@ -403,8 +425,45 @@
                 form.submit();
             }
         }
+        
+        // Confirm logout
+        function confirmLogout() {
+            return confirm('Apakah Anda yakin ingin keluar dari admin panel?');
+        }
+        
+        // Alternative logout function
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar dari admin panel?')) {
+                document.getElementById('logout-form').submit();
+            }
+        }
+        
+        // Robust logout function
+        function logoutAdmin() {
+            if (confirm('Apakah Anda yakin ingin keluar dari admin panel?')) {
+                // Create form dynamically
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route("admin.logout") }}';
+                
+                // Add CSRF token
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = '{{ csrf_token() }}';
+                form.appendChild(csrfInput);
+                
+                // Add to body and submit
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
     </script>
     
+    <!-- Global logout form -->
+    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
     @stack('scripts')
 </body>
 </html>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use App\Models\Admin;
 
 class AdminAuthController extends Controller
@@ -42,10 +43,17 @@ class AdminAuthController extends Controller
 
     public function logout(Request $request)
     {
+        Log::info('Admin logout attempt', [
+            'admin' => Auth::guard('admin')->user()->email ?? 'unknown',
+            'session_id' => $request->session()->getId()
+        ]);
+        
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         
-        return redirect()->route('admin.login');
+        Log::info('Admin logout successful');
+        
+        return redirect()->route('admin.login')->with('success', 'Berhasil logout dari admin panel');
     }
 }
