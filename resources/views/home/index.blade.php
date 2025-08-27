@@ -231,10 +231,10 @@
                                     <i class="fas fa-info-circle"></i>
                                     <span>Detail</span>
                                 </a>
-                                <a href="https://wa.me/6282334334737?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20{{ urlencode($product->name) }}%20" 
-                                   class="whatsapp-btn" target="_blank">
+                                <a href="{{ route('order.select', ['product' => $product->name, 'price' => $product->price]) }}" 
+                                   class="whatsapp-btn">
                                     <i class="fab fa-whatsapp"></i>
-                                    <span>Order Now</span>
+                                    <span>Pilih Admin</span>
                                 </a>
                             </div>
                         </div>

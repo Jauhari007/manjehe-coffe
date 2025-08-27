@@ -70,6 +70,14 @@ body {
     line-height: 1.6;
 }
 
+/* Prevent accidental horizontal scroll (e.g., from transforms / animations) */
+html, body { max-width: 100%; }
+body * { box-sizing: border-box; }
+/* Guard: any element wider than viewport will be constrained */
+body > * { max-width: 100vw; overflow-x: clip; }
+/* Specific wrappers that may flex beyond width */
+.detail-wrapper, .products-grid, .related, .video-wrapper, .contact-content, .footer-content { overflow-x: hidden; }
+
 .container {
     max-width: var(--container-width);
     margin: 0 auto;
@@ -2151,6 +2159,76 @@ nav.scrolled {
 ::-moz-selection {
     background: var(--primary-color);
     color: var(--background-dark);
+}
+/* === Enhanced Responsive Refinements (Added) === */
+/* Focus: product detail layout, related products grid, spacing & button sizing */
+@media (max-width: 1200px) {
+    .detail-wrapper {gap: 40px;}
+}
+
+@media (max-width: 992px) {
+    .detail-wrapper {gap: 35px;}
+    .detail-info h1 {font-size: 2.1rem !important;}
+}
+
+@media (max-width: 860px) {
+    .detail-wrapper {flex-direction: column; align-items: center;}
+    .detail-gallery, .detail-info {max-width: 760px; width: 100%;}
+    .detail-info {text-align: left;}
+    .detail-info .actions {justify-content: flex-start;}
+}
+
+@media (max-width: 720px) {
+    .detail-info h1 {font-size: 1.9rem !important;}
+    .detail-info .price {font-size: 1.8rem !important;}
+    .detail-info p {font-size: 0.95rem !important;}
+    .detail-wrapper {gap: 30px;}
+    .related {grid-template-columns: repeat(auto-fill,minmax(180px,1fr)) !important; gap: 18px !important;}
+}
+
+@media (max-width: 600px) {
+    .product-detail-page {padding-top: 110px;}
+    .detail-wrapper {gap: 28px;}
+    .detail-info h1 {font-size: 1.75rem !important;}
+    .detail-info .price {font-size: 1.6rem !important;}
+    .detail-info .features h3 {font-size: 1rem !important;}
+    .detail-info .actions {flex-direction: column; align-items: stretch; width: 100%;}
+    .detail-info .actions a, .detail-info .actions button {width: 100%; justify-content: center; font-size: 0.95rem;}
+    .thumbs {justify-content: flex-start;}
+    .thumb-btn {flex: 0 0 72px !important;}
+    .thumb-btn img {height: 56px !important;}
+    .related {grid-template-columns: repeat(auto-fill,minmax(160px,1fr)) !important;}
+}
+
+@media (max-width: 500px) {
+    .detail-info h1 {font-size: 1.55rem !important;}
+    .detail-info .price {font-size: 1.45rem !important;}
+    .detail-info p {font-size: 0.9rem !important;}
+    .detail-info .actions a, .detail-info .actions button {padding: 12px 22px !important;}
+    .related {gap: 16px !important;}
+}
+
+@media (max-width: 420px) {
+    .detail-wrapper {gap: 24px;}
+    .detail-info h1 {font-size: 1.4rem !important;}
+    .detail-info .price {font-size: 1.3rem !important;}
+    .detail-info p {font-size: 0.85rem !important;}
+    .detail-info .actions a, .detail-info .actions button {font-size: 0.85rem !important; padding: 11px 18px !important;}
+    .related {grid-template-columns: repeat(auto-fill,minmax(140px,1fr)) !important;}
+}
+
+@media (max-width: 360px) {
+    .detail-info h1 {font-size: 1.28rem !important;}
+    .detail-info .price {font-size: 1.2rem !important;}
+    .detail-info p {font-size: 0.8rem !important;}
+    .product-name-nav {font-size: 0.85rem !important;}
+}
+
+/* High density / large screens */
+@media (min-width: 2000px) {
+    .detail-wrapper {max-width: 1600px; margin-inline: auto;}
+    .detail-info h1 {font-size: 3rem;}
+    .detail-info .price {font-size: 2.4rem;}
 }
     </style>    
     <!-- CSRF Token -->

@@ -3,6 +3,13 @@
 @section('title', 'Dashboard - Manjehe Coffee Admin')
 @section('page_title', 'Dashboard')
 
+<link rel="icon" type="image/png" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="48x48" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/manjehe_logo.png') }}">
 @section('page_subtitle', 'Selamat datang di panel admin Manjehe Coffee!')
 
 @section('content')
