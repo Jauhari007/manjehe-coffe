@@ -42,12 +42,34 @@
             background: linear-gradient(180deg, var(--admin-dark), var(--admin-darker));
             border-right: 1px solid rgba(212, 165, 116, 0.1);
             backdrop-filter: blur(20px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
         }
         
         .admin-topbar {
             background: rgba(26, 26, 26, 0.95);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+            position: fixed;
+            top: 0;
+            left: 280px;
+            right: 0;
+            z-index: 999;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
         }
         
         .logo-admin {
@@ -290,101 +312,153 @@
             background: rgba(220, 53, 69, 0.1) !important;
             color: #dc3545 !important;
         }
+        
+        /* Scrollbar styling for sidebar */
+        .admin-sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .admin-sidebar::-webkit-scrollbar-track {
+            background: rgba(212, 165, 116, 0.1);
+        }
+        
+        .admin-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(212, 165, 116, 0.3);
+            border-radius: 3px;
+        }
+        
+        .admin-sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 165, 116, 0.5);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                width: 100%;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .admin-sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .admin-topbar {
+                left: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .mobile-menu-toggle {
+                display: block !important;
+            }
+        }
+        
+        .mobile-menu-toggle {
+            display: none;
+        }
     </style>
     
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('styles')
 </head>
 <body>
-    <div class="d-flex">
-        <!-- Sidebar -->
-        <div class="admin-sidebar" style="width: 280px; min-height: 100vh;">
-            <div class="p-4">
-                <!-- Logo -->
-                <div class="text-center mb-4">
-                    <h3 class="logo-admin font-weight-bold">
-                        <i class="fas fa-coffee me-2"></i>
-                        Coffee Manjehe
-                    </h3>
-                    <p class="text-muted small">Admin Panel</p>
-                </div>
-                
-                <!-- Navigation -->
-                <nav class="nav flex-column">
-                    <div class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <a class="nav-link d-flex align-items-center py-3 px-3" href="{{ route('admin.dashboard') }}">
-                            <i class="fas fa-tachometer-alt me-3"></i>
-                            Dashboard
-                        </a>
-                    </div>
-                    <div class="nav-item {{ Request::routeIs('admin.products.*') ? 'active' : '' }}">
-                        <a class="nav-link d-flex align-items-center py-3 px-3" href="{{ route('admin.products.index') }}">
-                            <i class="fas fa-coffee me-3"></i>
-                            Coffee Products
-                        </a>
-                    </div>
-                    <div class="nav-item">
-                        <a class="nav-link d-flex align-items-center py-3 px-3" href="{{ route('home') }}" target="_blank">
-                            <i class="fas fa-external-link-alt me-3"></i>
-                            View Website
-                        </a>
-                    </div>
-                </nav>
+    <!-- Sidebar -->
+    <div class="admin-sidebar" id="adminSidebar">
+        <div class="p-4">
+            <!-- Logo -->
+            <div class="text-center mb-4">
+                <h3 class="logo-admin font-weight-bold">
+                    <i class="fas fa-coffee me-2"></i>
+                    Manjehe Coffee
+                </h3>
+                <p class="text-white small">Admin Panel</p>
             </div>
+            
+            <!-- Navigation -->
+            <nav class="nav flex-column">
+                <div class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <a class="nav-link d-flex align-items-center py-3 px-3" href="{{ route('admin.dashboard') }}">
+                        <i class="fas fa-tachometer-alt me-3"></i>
+                        Dashboard
+                    </a>
+                </div>
+                <div class="nav-item {{ Request::routeIs('admin.products.*') ? 'active' : '' }}">
+                    <a class="nav-link d-flex align-items-center py-3 px-3" href="{{ route('admin.products.index') }}">
+                        <i class="fas fa-coffee me-3"></i>
+                        Coffee Products
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link d-flex align-items-center py-3 px-3" href="{{ route('home') }}" target="_blank">
+                        <i class="fas fa-external-link-alt me-3"></i>
+                        View Website
+                    </a>
+                </div>
+            </nav>
         </div>
-        
-        <!-- Main Content -->
-        <div class="flex-fill">
-            <!-- Top Bar -->
-            <div class="admin-topbar p-3 d-flex justify-content-between align-items-center">
+    </div>
+    
+    <!-- Top Bar -->
+    <div class="admin-topbar">
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <div class="d-flex align-items-center">
+                <!-- Mobile menu toggle -->
+                <button class="btn btn-outline-light me-3 mobile-menu-toggle" type="button" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <div>
                     <h4 class="mb-0 text-white">@yield('page_title', 'Dashboard')</h4>
                     <small class="text-muted">@yield('page_subtitle', 'Welcome back!')</small>
                 </div>
-                
-                <div class="dropdown">
-                    <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
-                        <i class="fas fa-user-circle me-2"></i>
-                        {{ Auth::guard('admin')->user()->name }}
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user me-2"></i>Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cog me-2"></i>Settings
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-item text-danger" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin keluar dari admin panel?')) document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt me-2"></i>Logout
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
             
-            <!-- Page Content -->
-            <div class="p-4">
-                @if(session('success'))
-                    <div class="alert alert-success d-flex align-items-center mb-4">
-                        <i class="fas fa-check-circle me-2"></i>
-                        {{ session('success') }}
-                    </div>
-                @endif
-                
-                @if(session('error'))
-                    <div class="alert alert-danger d-flex align-items-center mb-4">
-                        <i class="fas fa-exclamation-circle me-2"></i>
-                        {{ session('error') }}
-                    </div>
-                @endif
-                
-                @yield('content')
+            <div class="dropdown">
+                <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-user-circle me-2"></i>
+                    {{ Auth::guard('admin')->user()->name }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <i class="fas fa-user me-2"></i>Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-item text-danger" onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin keluar dari admin panel?')) document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </li>
+                </ul>
             </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="p-4">
+            @if(session('success'))
+                <div class="alert alert-success d-flex align-items-center mb-4">
+                    <i class="fas fa-check-circle me-2"></i>
+                    {{ session('success') }}
+                </div>
+            @endif
+            
+            @if(session('error'))
+                <div class="alert alert-danger d-flex align-items-center mb-4">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    {{ session('error') }}
+                </div>
+            @endif
+            
+            @yield('content')
         </div>
     </div>
 
@@ -417,6 +491,24 @@
             const btn = $(this);
             btn.prop('disabled', true);
             btn.html('<span class="spinner-border spinner-border-sm me-2"></span>Loading...');
+        });
+        
+        // Mobile sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('adminSidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('adminSidebar');
+            const toggleBtn = document.querySelector('.mobile-menu-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(event.target) && 
+                !toggleBtn.contains(event.target)) {
+                sidebar.classList.remove('mobile-open');
+            }
         });
         
         // Confirm delete

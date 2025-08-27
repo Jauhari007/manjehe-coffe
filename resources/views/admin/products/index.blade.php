@@ -1,7 +1,13 @@
 @extends('layouts.admin')
-
-@section('title', 'Kelola Produk - Coffee Manjehe Admin')
+@section('title', 'Kelola Produk - Manjehe Coffee Admin')
 @section('page_title', 'Kelola Produk Kopi')
+<link rel="icon" type="image/png" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="48x48" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/manjehe_logo.png') }}">
 @section('page_subtitle', 'Tambah, edit, dan kelola semua produk kopi Anda')
 
 @push('styles')
@@ -431,6 +437,7 @@
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
+                                <th>Gambar</th>
                                 <th>Produk</th>
                                 <th>Kategori</th>
                                 <th>Harga</th>
@@ -443,10 +450,14 @@
                             @foreach($products as $product)
                                 <tr>
                                     <td>
+                                        @if($product->images->count() > 0)
+                                            <img src="{{ $product->images->first()->image_url }}" class="product-image" alt="Gambar Produk">
+                                        @else
+                                            <span class="text-muted small">Tidak ada gambar</span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         <div class="d-flex align-items-center">
-                                            <div class="me-3">
-                                                <i class="{{ $product->icon }} fa-2x text-primary"></i>
-                                            </div>
                                             <div>
                                                 <h6 class="mb-1 fw-bold">{{ $product->name }}</h6>
                                                 <p class="mb-0 text-muted small">

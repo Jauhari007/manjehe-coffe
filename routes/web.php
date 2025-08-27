@@ -11,6 +11,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [HomeController::class, 'products'])->name('products');
 Route::post('/contact', [HomeController::class, 'contact'])->name('contact.store');
 
+// Alias global untuk route('login') agar tidak error
+Route::get('/login', function() {
+    return redirect()->route('admin.login');
+})->name('login');
+
 // Admin Authentication Routes
 Route::prefix('admin')->name('admin.')->group(function () {
     // Redirect /admin to /admin/login
@@ -18,16 +23,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return redirect()->route('admin.login');
     });
     
-    // Login routes (accessible to everyone) - Laravel 12 style
+    // Login routes (accessible to everyone)
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AdminAuthController::class, 'login']);
     
-    // Authenticated routes (perlu login admin) - Laravel 12 auth middleware
+    // Authenticated routes (perlu login admin)
     Route::middleware('auth:admin')->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         
         // Coffee Products CRUD
-        Route::resource('products', CoffeeProductController::class);
+        Route::resource('products', CoffeeProductController::class)->except(['show']);
+        Route::get('products/{product}', [CoffeeProductController::class, 'show'])->name('products.show');
     });
 });

@@ -10,11 +10,11 @@ class CoffeeProduct extends Model
     use HasFactory;
 
     protected $fillable = [
+        'product_id',
         'name',
         'description',
         'price',
         'category',
-        'icon',
         'features',
         'is_featured',
         'is_active',
@@ -25,7 +25,7 @@ class CoffeeProduct extends Model
         'features' => 'array',
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
-        'price' => 'decimal:2'
+        'price' => 'integer'  // Changed from decimal:2 to integer
     ];
 
     public function getFormattedPriceAttribute()
@@ -52,5 +52,11 @@ class CoffeeProduct extends Model
     public function scopeByCategory($query, $category)
     {
         return $query->where('category', $category);
+    }
+
+    // Relasi ke gambar produk
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'coffee_product_id');
     }
 }

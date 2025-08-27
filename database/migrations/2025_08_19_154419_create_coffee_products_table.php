@@ -10,11 +10,12 @@ return new class extends Migration
     {
         Schema::create('coffee_products', function (Blueprint $table) {
             $table->id();
+            $table->string('product_id')->unique(); // Kolom ID produk unik
+            $table->string('image')->nullable(); // Kolom gambar produk
             $table->string('name');
             $table->text('description');
             $table->decimal('price', 10, 2);
             $table->enum('category', ['hot', 'cold', 'beans']);
-            $table->string('icon')->default('fas fa-coffee');
             $table->json('features')->nullable();
             $table->boolean('is_featured')->default(false);
             $table->boolean('is_active')->default(true);

@@ -1,72 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Dashboard - Coffee Manjehe Admin')
+@section('title', 'Dashboard - Manjehe Coffee Admin')
 @section('page_title', 'Dashboard')
-@section('page_subtitle', 'Selamat datang di panel admin Coffee Manjehe!')
+
+@section('page_subtitle', 'Selamat datang di panel admin Manjehe Coffee!')
 
 @section('content')
-    <!-- Stats Cards -->
-    <div class="row mb-4">
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon bg-primary">
-                    <i class="fas fa-coffee"></i>
-                </div>
-                <div class="stats-content">
-                    <h3 class="text-white">{{ $stats['total_products'] }}</h3>
-                    <p class="text-muted mb-0">Total Produk</p>
-                    <small class="text-success">
-                        <i class="fas fa-arrow-up"></i> {{ $stats['active_products'] }} Aktif
-                    </small>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon bg-success">
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="stats-content">
-                    <h3 class="text-white">{{ $stats['featured_products'] }}</h3>
-                    <p class="text-muted mb-0">Produk Unggulan</p>
-                    <small class="text-warning">
-                        <i class="fas fa-crown"></i> Best Sellers
-                    </small>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon bg-danger">
-                    <i class="fas fa-thermometer-three-quarters"></i>
-                </div>
-                <div class="stats-content">
-                    <h3 class="text-white">{{ $stats['hot_coffee'] }}</h3>
-                    <p class="text-muted mb-0">Kopi Panas</p>
-                    <small class="text-danger">
-                        <i class="fas fa-fire"></i> Hot Coffee
-                    </small>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="stats-card">
-                <div class="stats-icon bg-info">
-                    <i class="fas fa-cube"></i>
-                </div>
-                <div class="stats-content">
-                    <h3 class="text-white">{{ $stats['cold_coffee'] }}</h3>
-                    <p class="text-muted mb-0">Kopi Dingin</p>
-                    <small class="text-info">
-                        <i class="fas fa-snowflake"></i> Cold Coffee
-                    </small>
-                </div>
-            </div>
-        </div>
-    </div>
+     
 
     <!-- Main Content -->
     <div class="row mb-5">
@@ -83,6 +23,69 @@
                             <i class="fas fa-eye me-2"></i>
                             Lihat Semua
                         </a>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="row mb-4">
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="stats-card">
+                                <div class="stats-icon bg-primary">
+                                    <i class="fas fa-coffee"></i>
+                                </div>
+                                <div class="stats-content">
+                                    <h3 class="text-white">{{ $stats['total_products'] }}</h3>
+                                    <p class="text-muted mb-0">Total Produk</p>
+                                    <small class="text-success">
+                                        <i class="fas fa-arrow-up"></i> {{ $stats['active_products'] }} Aktif
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="stats-card">
+                                <div class="stats-icon bg-success">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="stats-content">
+                                    <h3 class="text-white">{{ $stats['featured_products'] }}</h3>
+                                    <p class="text-muted mb-0">Produk Unggulan</p>
+                                    <small class="text-warning">
+                                        <i class="fas fa-crown"></i> Best Sellers
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="stats-card">
+                                <div class="stats-icon bg-danger">
+                                    <i class="fas fa-thermometer-three-quarters"></i>
+                                </div>
+                                <div class="stats-content">
+                                    <h3 class="text-white">{{ $stats['hot_coffee'] }}</h3>
+                                    <p class="text-muted mb-0">Kopi Panas</p>
+                                    <small class="text-danger">
+                                        <i class="fas fa-fire"></i> Hot Coffee
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="stats-card">
+                                <div class="stats-icon bg-info">
+                                    <i class="fas fa-cube"></i>
+                                </div>
+                                <div class="stats-content">
+                                    <h3 class="text-white">{{ $stats['cold_coffee'] }}</h3>
+                                    <p class="text-muted mb-0">Kopi Dingin</p>
+                                    <small class="text-info">
+                                        <i class="fas fa-snowflake"></i> Cold Coffee
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     @if($recent_products->count() > 0)
@@ -103,7 +106,10 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="product-icon-small me-3">
-                                                        <i class="{{ $product->icon ?? 'fas fa-coffee' }} text-warning"></i>
+                                                        @if($product->images && $product->images->count() > 0)
+                                                            <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" class="product-image" style="width:32px;height:32px;object-fit:cover;border-radius:6px;" alt="Gambar Produk">
+                                                        @else
+                                                        @endif
                                                     </div>
                                                     <div>
                                                         <h6 class="mb-0 text-white">{{ $product->name }}</h6>

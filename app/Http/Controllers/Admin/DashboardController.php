@@ -21,7 +21,7 @@ class DashboardController extends Controller
                 'coffee_beans' => CoffeeProduct::byCategory('beans')->count(),
             ];
             
-            $recent_products = CoffeeProduct::latest()->take(5)->get();
+            $recent_products = CoffeeProduct::with('images')->latest()->take(5)->get();
             
             // Add contact messages data
             $recentMessages = Contact::latest()->take(5)->get();

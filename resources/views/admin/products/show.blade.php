@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Detail Produk - Coffee Manjehe Admin')
+@section('title', 'Detail Produk - Manjehe Coffee Admin')
 @section('page_title', 'Detail Produk Kopi')
 @section('page_subtitle', 'Informasi lengkap produk "' . $product->name . '"')
 

@@ -7,76 +7,6 @@
 @push('styles')
 <style>
     /* Dark Coffee Theme for Create Product Form */
-    .icon-selector {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 12px;
-        max-height: 350px;
-        overflow-y: auto;
-        border: 1px solid rgba(212, 165, 116, 0.3);
-        border-radius: 12px;
-        padding: 20px;
-        background: linear-gradient(135deg, rgba(26, 15, 10, 0.4), rgba(26, 15, 10, 0.2)) !important;
-        backdrop-filter: blur(10px);
-    }
-    
-    .icon-selector::-webkit-scrollbar {
-        width: 8px;
-    }
-    
-    .icon-selector::-webkit-scrollbar-track {
-        background: rgba(212, 165, 116, 0.1);
-        border-radius: 10px;
-    }
-    
-    .icon-selector::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #D4A574, rgba(212, 165, 116, 0.8));
-        border-radius: 10px;
-    }
-    
-    .icon-option {
-        text-align: center;
-        padding: 15px 10px;
-        border: 2px solid rgba(212, 165, 116, 0.2);
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: rgba(26, 15, 10, 0.3) !important;
-        color: #e5e7eb !important;
-    }
-    
-    .icon-option:hover {
-        border-color: #D4A574 !important;
-        background: rgba(212, 165, 116, 0.15) !important;
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(212, 165, 116, 0.2);
-        color: #D4A574 !important;
-    }
-    
-    .icon-option.selected {
-        border-color: #D4A574 !important;
-        background: linear-gradient(135deg, #D4A574, rgba(212, 165, 116, 0.8)) !important;
-        color: #2D1810 !important;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(212, 165, 116, 0.3);
-    }
-    
-    .icon-option i {
-        font-size: 24px;
-        margin-bottom: 8px;
-        display: block;
-        transition: transform 0.3s ease;
-    }
-    
-    .icon-option:hover i {
-        transform: scale(1.1);
-    }
-    
-    .icon-option small {
-        font-size: 0.75rem;
-        font-weight: 500;
-        text-transform: capitalize;
-    }
     
     /* Form Styling - Dark Theme */
     .card {
@@ -255,56 +185,201 @@
         color: #28a745;
         margin-top: 5px;
     }
+    
+    /* Valid/Invalid States */
+    .form-control.is-valid,
+    .form-select.is-valid {
+        border-color: #28a745 !important;
+    }
+    
+    .form-control.is-invalid,
+    .form-select.is-invalid {
+        border-color: #dc3545 !important;
+    }
+    
+    /* Form Text */
+    .form-text {
+        color: rgba(229, 231, 235, 0.6) !important;
+    }
+    
+    /* File Input */
+    input[type="file"] {
+        background: rgba(26, 15, 10, 0.4) !important;
+        border: 1px solid rgba(212, 165, 116, 0.3) !important;
+        color: #e5e7eb !important;
+        border-radius: 10px !important;
+    }
+    
+    input[type="file"]:focus {
+        background: rgba(26, 15, 10, 0.6) !important;
+        border-color: #D4A574 !important;
+        box-shadow: 0 0 0 0.2rem rgba(212, 165, 116, 0.15) !important;
+    }
+    
+    /* Form Check */
+    .form-check-input {
+        background-color: rgba(26, 15, 10, 0.4) !important;
+        border-color: rgba(212, 165, 116, 0.3) !important;
+    }
+    
+    .form-check-input:checked {
+        background-color: #D4A574 !important;
+        border-color: #D4A574 !important;
+    }
+    
+    .form-check-input:focus {
+        box-shadow: 0 0 0 0.2rem rgba(212, 165, 116, 0.15) !important;
+    }
+    
+    .form-check-label {
+        color: #e5e7eb !important;
+        font-weight: 500;
+    }
 </style>
 @endpush
 
 @section('content')
-    <div class="row">
-        <!-- Form Column -->
-        <div class="col-lg-8">
-            <form action="{{ route('admin.products.store') }}" method="POST" id="productForm">
-                @csrf
-                
-                @include('admin.products.form')
-
-                <!-- Action Buttons -->
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left me-2"></i>Kembali
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i>Simpan Produk
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        
-        <!-- Preview Column -->
-        <div class="col-lg-4">
-            <div class="card sticky-top" style="top: 20px;">
-                <div class="card-header">
-                    <h5><i class="fas fa-eye me-2"></i>Preview Produk</h5>
-                </div>
+<div class="row">
+    <div class="col-md-12">
+        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            
+            <!-- Informasi Dasar -->
+            <div class="card">
                 <div class="card-body">
-                    <div class="preview-card" id="productPreview">
-                        <div class="preview-icon">
-                            <i class="fas fa-coffee" id="previewIcon"></i>
-                        </div>
-                        <h5 id="previewName">Nama Produk</h5>
-                        <p class="mb-1" id="previewCategory">Kategori</p>
-                        <div class="price-preview" id="previewPrice">Rp 0</div>
-                        <p class="mt-3 small" id="previewDescription">Deskripsi produk akan muncul di sini...</p>
-                        <div id="previewFeatures"></div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nama Produk *</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" 
+                               id="name" name="name" value="{{ old('name') }}" required>
+                        @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Kategori *</label>
+                        <select class="form-select @error('category') is-invalid @enderror" 
+                                id="category" name="category" required>
+                            <option value="">Pilih Kategori</option>
+                            @foreach($categories as $value => $label)
+                                <option value="{{ $value }}" {{ old('category') == $value ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('category')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Harga (Rp) *</label>
+                        <input type="text" class="form-control @error('price') is-invalid @enderror" 
+                               id="price" name="price" value="{{ old('price') }}" required>
+                        @error('price')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Deskripsi *</label>
+                        <textarea class="form-control @error('description') is-invalid @enderror" 
+                                  id="description" name="description" rows="4" required>{{ old('description') }}</textarea>
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Gambar -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="images" class="form-label">Gambar Produk *</label>
+                        <input type="file" class="form-control @error('images') is-invalid @enderror" 
+                               id="images" name="images[]" multiple accept="image/*" required>
+                        <div class="form-text">Format: JPG, PNG, GIF (Max: 5MB)</div>
+                        @error('images')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div id="imagePreview" class="row mt-3"></div>
+                </div>
+            </div>
+
+            <!-- Pengaturan -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="is_active" name="is_active" value="1" checked>
+                        <label class="form-check-label" for="is_active">
+                            Aktif
+                        </label>
+                    </div>
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" id="is_featured" name="is_featured" value="1">
+                        <label class="form-check-label" for="is_featured">
+                            Produk Unggulan
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Simpan Produk
+                </button>
+                <a href="{{ route('admin.products.index') }}" class="btn btn-secondary ms-2">
+                    <i class="fas fa-arrow-left me-2"></i>Kembali
+                </a>
+            </div>
+        </form>
     </div>
+</div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Format harga
+    const priceInput = document.getElementById('price');
+    priceInput.addEventListener('input', function(e) {
+        let value = this.value.replace(/\D/g, '');
+        if (value) {
+            value = parseInt(value).toLocaleString('id-ID');
+            this.value = value;
+        }
+    });
+
+    // Preview gambar
+    const imageInput = document.getElementById('images');
+    const preview = document.getElementById('imagePreview');
+    
+    imageInput.addEventListener('change', function() {
+        preview.innerHTML = '';
+        Array.from(this.files).forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                const col = document.createElement('div');
+                col.className = 'col-md-3';
+                const img = document.createElement('img');
+                img.className = 'img-thumbnail';
+                img.style.height = '150px';
+                img.style.width = '100%';
+                img.style.objectFit = 'cover';
+                
+                reader.onload = e => img.src = e.target.result;
+                reader.readAsDataURL(file);
+                
+                col.appendChild(img);
+                preview.appendChild(col);
+            }
+        });
+    });
+});
+</script>
+@endpush
 
 @push('scripts')
 <script>
@@ -313,56 +388,53 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePreview();
     
     // Add event listeners
-    document.getElementById('name').addEventListener('input', updatePreview);
-    document.getElementById('category').addEventListener('change', updatePreview);
-    document.getElementById('price').addEventListener('input', updatePreview);
-    document.getElementById('description').addEventListener('input', updatePreview);
+    const nameInput = document.getElementById('name');
+    const categoryInput = document.getElementById('category');
+    const priceInput = document.getElementById('price');
+    const descInput = document.getElementById('description');
     
-    // Icon selection handler
-    document.querySelectorAll('.icon-option').forEach(option => {
-        option.addEventListener('click', function() {
-            // Remove selected class from all options
-            document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
-            
-            // Add selected class to clicked option
-            this.classList.add('selected');
-            
-            // Set icon value
-            const iconClass = this.dataset.icon;
-            document.getElementById('icon').value = iconClass;
-            
-            // Update preview
-            updatePreview();
-        });
-    });
+    if (nameInput) nameInput.addEventListener('input', updatePreview);
+    if (categoryInput) categoryInput.addEventListener('change', updatePreview);
+    if (priceInput) priceInput.addEventListener('input', updatePreview);
+    if (descInput) descInput.addEventListener('input', updatePreview);
     
     // Feature management
     let featureCount = 1;
     
-    document.getElementById('addFeature').addEventListener('click', function() {
-        featureCount++;
-        const featuresContainer = document.getElementById('featuresContainer');
-        const newFeature = `
-            <div class="feature-input">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="features[]" placeholder="Contoh: 100% Arabika">
-                    <button type="button" class="btn btn-outline-danger remove-feature">
-                        <i class="fas fa-times"></i>
-                    </button>
+    const addFeatureBtn = document.getElementById('addFeature');
+    if (addFeatureBtn) {
+        addFeatureBtn.addEventListener('click', function() {
+            featureCount++;
+            const featuresContainer = document.getElementById('featuresContainer');
+            const newFeature = `
+                <div class="feature-input">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="features[]" placeholder="Contoh: 100% Arabika">
+                        <button type="button" class="btn btn-outline-danger remove-feature">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        `;
-        featuresContainer.insertAdjacentHTML('beforeend', newFeature);
-        
-        // Add event listener for remove button
-        featuresContainer.lastElementChild.querySelector('.remove-feature').addEventListener('click', function() {
-            this.closest('.feature-input').remove();
-            updatePreview();
+            `;
+            featuresContainer.insertAdjacentHTML('beforeend', newFeature);
+            
+            // Add event listener for remove button
+            const newFeatureElement = featuresContainer.lastElementChild;
+            const removeBtn = newFeatureElement.querySelector('.remove-feature');
+            if (removeBtn) {
+                removeBtn.addEventListener('click', function() {
+                    this.closest('.feature-input').remove();
+                    updatePreview();
+                });
+            }
+            
+            // Add event listener for input
+            const newInput = newFeatureElement.querySelector('input');
+            if (newInput) {
+                newInput.addEventListener('input', updatePreview);
+            }
         });
-        
-        // Add event listener for input
-        featuresContainer.lastElementChild.querySelector('input').addEventListener('input', updatePreview);
-    });
+    }
     
     // Remove feature handler for existing features
     document.querySelectorAll('.remove-feature').forEach(btn => {
@@ -378,87 +450,118 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Price formatting
-    document.getElementById('price').addEventListener('input', function() {
-        let value = this.value.replace(/[^\d]/g, '');
-        if (value) {
-            this.value = parseInt(value).toLocaleString('id-ID');
-        }
-        updatePreview();
-    });
+    if (priceInput) {
+        priceInput.addEventListener('input', function() {
+            // Ambil semua digit, gabung, lalu format ribuan
+            let value = this.value.replace(/[^\d]/g, '');
+            if (value) {
+                // Hanya format jika value memang angka
+                this.value = Number(value).toLocaleString('id-ID');
+            } else {
+                this.value = '';
+            }
+            updatePreview();
+        });
+    }
+
+    // Pastikan sebelum submit, value price adalah angka tanpa titik
+    const productForm = document.getElementById('productForm');
+    if (productForm) {
+        productForm.addEventListener('submit', function(e) {
+            const priceInput = document.getElementById('price');
+            if (priceInput) {
+                priceInput.value = priceInput.value.replace(/\./g, '').replace(/,/g, '');
+            }
+        });
+    }
     
     // Update preview initially
-    if (document.getElementById('price').value) {
-        document.getElementById('price').dispatchEvent(new Event('input'));
+    if (priceInput && priceInput.value) {
+        priceInput.dispatchEvent(new Event('input'));
     }
     updatePreview();
 });
 
 function updatePreview() {
-    // Update name
-    const name = document.getElementById('name').value || 'Nama Produk';
-    document.getElementById('previewName').textContent = name;
+    // Defensive: only update if element exists
+    const nameInput = document.getElementById('name');
+    const categoryInput = document.getElementById('category');
+    const priceInput = document.getElementById('price');
+    const descInput = document.getElementById('description');
     
-    // Update category
-    const category = document.getElementById('category').selectedOptions[0]?.text || 'Kategori';
-    document.getElementById('previewCategory').textContent = category;
-    
-    // Update price
-    const price = document.getElementById('price').value || '0';
+    if (!nameInput || !categoryInput || !priceInput || !descInput) return;
+
+    const name = nameInput.value || 'Nama Produk';
+    const previewName = document.getElementById('previewName');
+    if (previewName) previewName.textContent = name;
+
+    const category = categoryInput.selectedOptions[0]?.text || 'Kategori';
+    const previewCategory = document.getElementById('previewCategory');
+    if (previewCategory) previewCategory.textContent = category;
+
+    const price = priceInput.value || '0';
     const priceNumber = parseInt(price.replace(/[^\d]/g, ''));
-    document.getElementById('previewPrice').textContent = 'Rp ' + (priceNumber || 0).toLocaleString('id-ID');
-    
-    // Update description
-    const description = document.getElementById('description').value || 'Deskripsi produk akan muncul di sini...';
-    document.getElementById('previewDescription').textContent = description.substring(0, 100) + (description.length > 100 ? '...' : '');
-    
-    // Update icon
-    const icon = document.getElementById('icon').value || 'fas fa-coffee';
-    document.getElementById('previewIcon').className = icon;
-    
-    // Update features
+    const previewPrice = document.getElementById('previewPrice');
+    if (previewPrice) previewPrice.textContent = 'Rp ' + (priceNumber ? priceNumber.toLocaleString('id-ID') : '0');
+
+    const description = descInput.value || 'Deskripsi produk akan muncul di sini...';
+    const previewDescription = document.getElementById('previewDescription');
+    if (previewDescription) previewDescription.textContent = description.substring(0, 100) + (description.length > 100 ? '...' : '');
+
+    // Features
     const features = Array.from(document.querySelectorAll('input[name="features[]"]'))
         .map(input => input.value)
         .filter(value => value.trim());
-    
     const featuresHtml = features.length > 0 
         ? '<div class="mt-3"><small>' + features.map(f => '• ' + f).join('<br>') + '</small></div>'
         : '';
-    document.getElementById('previewFeatures').innerHTML = featuresHtml;
+    const previewFeatures = document.getElementById('previewFeatures');
+    if (previewFeatures) previewFeatures.innerHTML = featuresHtml;
 }
 
 // Form validation
-document.getElementById('productForm').addEventListener('submit', function(e) {
-    const requiredFields = ['name', 'category', 'price', 'description', 'icon'];
-    let isValid = true;
-    
-    requiredFields.forEach(fieldName => {
-        const field = document.getElementById(fieldName);
-        if (!field.value.trim()) {
-            field.classList.add('is-invalid');
+const productForm = document.getElementById('productForm');
+if (productForm) {
+    productForm.addEventListener('submit', function(e) {
+        const requiredFields = ['name', 'category', 'price', 'description'];
+        let isValid = true;
+        
+        requiredFields.forEach(fieldName => {
+            const field = document.getElementById(fieldName);
+            if (field && !field.value.trim()) {
+                field.classList.add('is-invalid');
+                isValid = false;
+            } else if (field) {
+                field.classList.remove('is-invalid');
+            }
+        });
+        
+        // Check features
+        const featuresInputs = document.querySelectorAll('input[name="features[]"]');
+        let hasFeature = false;
+        featuresInputs.forEach(input => {
+            if (input.value.trim()) {
+                hasFeature = true;
+            }
+        });
+        
+        if (!hasFeature) {
+            alert('Minimal harus ada 1 fitur produk');
             isValid = false;
-        } else {
-            field.classList.remove('is-invalid');
+        }
+        
+        // Check images for create mode
+        const imagesInput = document.getElementById('images');
+        if (imagesInput && imagesInput.hasAttribute('required') && (!imagesInput.files || imagesInput.files.length === 0)) {
+            imagesInput.classList.add('is-invalid');
+            isValid = false;
+        }
+        
+        if (!isValid) {
+            e.preventDefault();
+            alert('Mohon lengkapi semua field yang wajib diisi');
         }
     });
-    
-    // Check features
-    const featuresInputs = document.querySelectorAll('input[name="features[]"]');
-    let hasFeature = false;
-    featuresInputs.forEach(input => {
-        if (input.value.trim()) {
-            hasFeature = true;
-        }
-    });
-    
-    if (!hasFeature) {
-        alert('Minimal harus ada 1 fitur produk');
-        isValid = false;
-    }
-    
-    if (!isValid) {
-        e.preventDefault();
-        alert('Mohon lengkapi semua field yang wajib diisi');
-    }
-});
+}
 </script>
 @endpush

@@ -1,177 +1,197 @@
-<!-- Basic Information -->
-<div class="card mb-4">
+<!-- Basic Information Card -->
+<div class="card">
     <div class="card-header">
-        <h5 class="mb-0">
-            <i class="fas fa-info-circle me-2"></i>
-            Informasi Dasar
-        </h5>
+        <h5><i class="fas fa-info-circle me-2"></i>Informasi Dasar</h5>
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-8">
-                <div class="mb-3">
-                    <label for="name" class="form-label text-warning" style="font-weight:600;">Nama Produk *</label>
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
                     <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                           id="name" name="name" value="{{ old('name', $product->name ?? '') }}" 
-                           placeholder="Masukkan nama produk" required>
+                           id="name" name="name" placeholder="Nama Produk" 
+                           value="{{ old('name', $product->name ?? '') }}" required>
+                    <label for="name">Nama Produk *</label>
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <label for="category" class="form-label text-warning" style="font-weight:600;">Kategori *</label>
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
                     <select class="form-select @error('category') is-invalid @enderror" 
                             id="category" name="category" required>
                         <option value="">Pilih Kategori</option>
-                        <option value="hot" {{ old('category', $product->category ?? '') == 'hot' ? 'selected' : '' }}>Kopi Panas</option>
-                        <option value="cold" {{ old('category', $product->category ?? '') == 'cold' ? 'selected' : '' }}>Kopi Dingin</option>
-                        <option value="beans" {{ old('category', $product->category ?? '') == 'beans' ? 'selected' : '' }}>Biji Kopi</option>
+                        @foreach($categories as $key => $value)
+                            <option value="{{ $key }}" 
+                                {{ old('category', $product->category ?? '') == $key ? 'selected' : '' }}>
+                                {{ $value }}
+                            </option>
+                        @endforeach
                     </select>
+                    <label for="category">Kategori *</label>
                     @error('category')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
         </div>
-
-        <div class="mb-3">
-            <label for="description" class="form-label text-warning" style="font-weight:600;">Deskripsi Produk *</label>
+        
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control @error('price') is-invalid @enderror" 
+                   id="price" name="price" placeholder="Harga" 
+                   value="{{ old('price', isset($product) ? number_format($product->price, 0, ',', '.') : '') }}" 
+                   oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" required>
+            <label for="price">Harga (Rp) *</label>
+            @error('price')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+        
+        <div class="form-floating mb-3">
             <textarea class="form-control @error('description') is-invalid @enderror" 
-                      id="description" name="description" 
-                      placeholder="Tuliskan deskripsi produk" 
-                      style="height: 160px;" required>{{ old('description', $product->description ?? '') }}</textarea>
+                      id="description" name="description" placeholder="Deskripsi" 
+                      style="height: 120px" required>{{ old('description', $product->description ?? '') }}</textarea>
+            <label for="description">Deskripsi Produk *</label>
             @error('description')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="price" class="form-label text-warning" style="font-weight:600;">Harga (Rp) *</label>
-                    <input type="number" class="form-control @error('price') is-invalid @enderror" 
-                           id="price" name="price" value="{{ old('price', $product->price ?? '') }}" 
-                           placeholder="Contoh: 25000" min="0" step="1000" required>
-                    @error('price')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="price-preview" id="pricePreview"></div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="whatsapp_text" class="form-label text-warning" style="font-weight:600;">Pesan WhatsApp (Opsional)</label>
-                    <textarea class="form-control" id="whatsapp_text" name="whatsapp_text" 
-                              placeholder="Teks yang akan otomatis terisi saat pesan" style="height: 120px;">{{ old('whatsapp_text', $product->whatsapp_text ?? '') }}</textarea>
-                    <small class="text-muted">Kosongkan untuk menggunakan pesan default</small>
-                </div>
-            </div>
+        
+        <div class="form-floating mb-3">
+            <textarea class="form-control @error('whatsapp_text') is-invalid @enderror" 
+                      id="whatsapp_text" name="whatsapp_text" placeholder="Teks WhatsApp" 
+                      style="height: 80px">{{ old('whatsapp_text', $product->whatsapp_text ?? '') }}</textarea>
+            <label for="whatsapp_text">Teks WhatsApp (Opsional)</label>
+            <div class="form-text">Teks yang akan muncul saat pelanggan menghubungi via WhatsApp</div>
+            @error('whatsapp_text')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
     </div>
 </div>
 
-<!-- Icon Selection -->
-<div class="card mb-4">
+<!-- Features Card -->
+<div class="card">
     <div class="card-header">
-        <h5 class="mb-0">
-            <i class="fas fa-icons me-2"></i>
-            Pilih Icon Produk
-        </h5>
+        <h5><i class="fas fa-star me-2"></i>Fitur Produk</h5>
     </div>
     <div class="card-body">
-        <input type="hidden" name="icon" id="selectedIcon" value="{{ old('icon', $product->icon ?? '') }}">
-        <div class="icon-selector" id="iconSelector">
-            @php
-                $icons = [
-                    'fas fa-coffee', 'fas fa-mug-hot', 'fas fa-seedling', 'fas fa-leaf',
-                    'fas fa-fire', 'fas fa-snowflake', 'fas fa-star', 'fas fa-heart',
-                    'fas fa-sun', 'fas fa-moon', 'fas fa-cloud', 'fas fa-mountain',
-                    'fas fa-tree', 'fas fa-gem', 'fas fa-crown', 'fas fa-award',
-                    'fas fa-gift', 'fas fa-magic', 'fas fa-bolt', 'fas fa-diamond'
-                ];
-            @endphp
-            
-            @foreach($icons as $icon)
-                <div class="icon-option {{ old('icon', $product->icon ?? '') == $icon ? 'selected' : '' }}" data-icon="{{ $icon }}">
-                    <i class="{{ $icon }}"></i>
-                    <small>{{ str_replace(['fas fa-', '-'], ['', ' '], $icon) }}</small>
+        <div id="featuresContainer">
+            @if(old('features') || (isset($product) && $product->features))
+                @foreach(old('features', $product->features ?? []) as $index => $feature)
+                    <div class="feature-input">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="features[]" 
+                                   placeholder="Contoh: 100% Arabika" value="{{ $feature }}">
+                            @if($index > 0)
+                                <button type="button" class="btn btn-outline-danger remove-feature">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div class="feature-input">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="features[]" 
+                               placeholder="Contoh: 100% Arabika">
+                    </div>
                 </div>
-            @endforeach
+            @endif
         </div>
-        @error('icon')
+        
+        <button type="button" id="addFeature" class="btn btn-outline-success mt-2">
+            <i class="fas fa-plus me-2"></i>Tambah Fitur
+        </button>
+        
+        @error('features')
             <div class="text-danger mt-2">{{ $message }}</div>
         @enderror
     </div>
 </div>
 
-<!-- Features -->
-<div class="card mb-4">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">
-            <i class="fas fa-list me-2"></i>
-            Fitur Produk
-        </h5>
-        <button type="button" class="btn btn-sm btn-outline-primary" id="addFeature">
-            <i class="fas fa-plus me-1"></i> Tambah Fitur
-        </button>
+<!-- Images Card -->
+<div class="card">
+    <div class="card-header">
+        <h5><i class="fas fa-images me-2"></i>Gambar Produk</h5>
     </div>
     <div class="card-body">
-        <div id="featuresContainer">
-            @php
-                $features = old('features', $product->features ?? ['']);
-                if (!is_array($features)) $features = [$features];
-                if (empty($features)) $features = [''];
-            @endphp
-            
-            @foreach($features as $feature)
-                <div class="feature-input">
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control" 
-                               name="features[]" value="{{ $feature }}" 
-                               placeholder="Masukkan fitur produk...">
-                        <button type="button" class="btn btn-outline-danger btn-remove-feature">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+        <!-- Existing Images (for edit mode) -->
+        @if(isset($product) && $product->images->count() > 0)
+            <div class="mb-3">
+                <label class="form-label">Gambar Saat Ini:</label>
+                <div class="row" id="currentImages">
+                    @foreach($product->images as $image)
+                        <div class="col-md-4 mb-2">
+                            <img src="{{ $image->image_url }}" 
+                                 class="img-thumbnail" 
+                                 style="width: 100%; height: 120px; object-fit: cover;">
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
+                <div class="form-text text-warning">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    Upload gambar baru akan mengganti semua gambar yang ada
+                </div>
+            </div>
+        @endif
+        
+        <div class="mb-3">
+            <label for="images" class="form-label text-warning" style="font-weight:600;">
+                {{ isset($product) ? 'Gambar Baru (Opsional)' : 'Gambar Produk *' }}
+            </label>
+            <div class="custom-file-input position-relative">
+                <input type="file" class="form-control @error('images') is-invalid @enderror @error('images.*') is-invalid @enderror" 
+                       id="images" name="images[]" multiple 
+                       accept="image/jpeg,image/png,image/jpg,image/gif,image/webp" 
+                       {{ !isset($product) ? 'required' : '' }}
+                       onchange="previewImages(this)">
+                <div class="form-text mt-1">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Format yang didukung: JPEG, PNG, JPG, GIF, WEBP. Maksimal 5 gambar, masing-masing 5MB.
+                </div>
+                @error('images')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+                @error('images.*')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Image Preview Container -->
+            <div id="imagePreviewContainer" class="row mt-3">
+                <!-- New images will be previewed here -->
+            </div>
         </div>
-        <small class="text-muted">Tambahkan fitur-fitur unggulan dari produk ini</small>
     </div>
 </div>
 
-<!-- Status Settings -->
-<div class="card mb-4">
+<!-- Settings Card -->
+<div class="card">
     <div class="card-header">
-        <h5 class="mb-0">
-            <i class="fas fa-cog me-2"></i>
-            Pengaturan Status
-        </h5>
+        <h5><i class="fas fa-cog me-2"></i>Pengaturan</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <div class="form-check form-switch mb-3">
-                    <input type="checkbox" class="form-check-input" 
-                           id="is_active" name="is_active" value="1" 
-                           {{ old('is_active', $product->is_active ?? true) ? 'checked' : '' }}>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="is_active" name="is_active" 
+                           value="1" {{ old('is_active', $product->is_active ?? true) ? 'checked' : '' }}>
                     <label class="form-check-label" for="is_active">
-                        <strong>Produk Aktif</strong>
-                        <br><small class="text-muted">Produk akan ditampilkan di website</small>
+                        Aktif
                     </label>
+                    <div class="form-text">Produk akan ditampilkan di katalog</div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-check form-switch mb-3">
-                    <input type="checkbox" class="form-check-input" 
-                           id="is_featured" name="is_featured" value="1" 
-                           {{ old('is_featured', $product->is_featured ?? false) ? 'checked' : '' }}>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="is_featured" name="is_featured" 
+                           value="1" {{ old('is_featured', $product->is_featured ?? false) ? 'checked' : '' }}>
                     <label class="form-check-label" for="is_featured">
-                        <strong>Produk Unggulan</strong>
-                        <br><small class="text-muted">Tampilkan sebagai produk unggulan</small>
+                        Produk Unggulan
                     </label>
+                    <div class="form-text">Produk akan ditampilkan di halaman utama</div>
                 </div>
             </div>
         </div>
@@ -180,157 +200,68 @@
 
 @push('scripts')
 <script>
-$(document).ready(function() {
-    // Icon selection
-    $('.icon-option').click(function() {
-        $('.icon-option').removeClass('selected');
-        $(this).addClass('selected');
-        const icon = $(this).data('icon');
-        $('#selectedIcon').val(icon);
-        if ($('#previewIcon').length) {
-            $('#previewIcon').attr('class', icon);
-        }
-    });
-
-    // Set default icon if exists
-    if ($('#selectedIcon').val()) {
-        $(`.icon-option[data-icon="${$('#selectedIcon').val()}"]`).addClass('selected');
+document.addEventListener('DOMContentLoaded', function() {
+    // Image preview functionality
+    const imageInput = document.getElementById('images');
+    const imagePreview = document.getElementById('imagePreview');
+    
+    if (imageInput) {
+        imageInput.addEventListener('change', function(e) {
+            imagePreview.innerHTML = '';
+            imagePreview.style.display = 'none';
+            
+            if (e.target.files && e.target.files.length > 0) {
+                imagePreview.style.display = 'flex';
+                
+                Array.from(e.target.files).forEach((file, index) => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const col = document.createElement('div');
+                            col.className = 'col-md-4 col-6 mb-3';
+                            col.innerHTML = `
+                                <div class="position-relative">
+                                    <img src="${e.target.result}" 
+                                         class="img-thumbnail" 
+                                         style="width: 100%; height: 120px; object-fit: cover;">
+                                    <span class="position-absolute top-0 start-0 badge bg-primary m-1">
+                                        ${index + 1}
+                                    </span>
+                                </div>
+                            `;
+                            imagePreview.appendChild(col);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
     }
-
-    // Add feature functionality
-    $('#addFeature').click(function() {
-        const featureHtml = `
-            <div class="feature-input">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" name="features[]" placeholder="Masukkan fitur produk...">
-                    <button type="button" class="btn btn-outline-danger btn-remove-feature">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-        `;
-        $('#featuresContainer').append(featureHtml);
-    });
-
-    // Remove feature functionality
-    $(document).on('click', '.btn-remove-feature', function() {
-        if ($('.feature-input').length > 1) {
-            $(this).closest('.feature-input').remove();
+    
+    // Form validation enhancement
+    const requiredFields = ['name', 'category', 'price', 'description'];
+    
+    // Real-time validation
+    requiredFields.forEach(fieldName => {
+        const field = document.getElementById(fieldName);
+        if (field) {
+            field.addEventListener('blur', function() {
+                if (!this.value.trim()) {
+                    this.classList.add('is-invalid');
+                } else {
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                }
+            });
+            
+            field.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                }
+            });
         }
     });
-
-    // Price formatting
-    $('#price').on('input', function() {
-        const price = parseInt($(this).val()) || 0;
-        const formatted = 'Rp ' + price.toLocaleString('id-ID');
-        $('#pricePreview').text(formatted);
-        if ($('#previewPrice').length) {
-            $('#previewPrice').text(formatted);
-        }
-    });
-
-    // Trigger initial price format
-    if ($('#price').val()) {
-        $('#price').trigger('input');
-    }
 });
 </script>
-@endpush
-
-@push('styles')
-<style>
-    /* Override any white backgrounds in form.blade.php */
-    .form-control,
-    .form-select,
-    input[type="text"],
-    input[type="number"],
-    textarea,
-    select {
-        background: rgba(26, 15, 10, 0.4) !important;
-        background-color: rgba(26, 15, 10, 0.4) !important;
-        border: 1px solid rgba(212, 165, 116, 0.3) !important;
-        color: #e5e7eb !important;
-        border-radius: 10px !important;
-    }
-    
-    .form-control:focus,
-    .form-select:focus,
-    input[type="text"]:focus,
-    input[type="number"]:focus,
-    textarea:focus,
-    select:focus {
-        background: rgba(26, 15, 10, 0.6) !important;
-        background-color: rgba(26, 15, 10, 0.6) !important;
-        border-color: #D4A574 !important;
-        box-shadow: 0 0 0 0.2rem rgba(212, 165, 116, 0.15) !important;
-        color: #D4A574 !important;
-    }
-    
-    /* Remove floating label backgrounds completely */
-    .form-floating > label {
-        background: transparent !important;
-        background-color: transparent !important;
-        color: #D4A574 !important;
-        font-weight: 500;
-        opacity: 1 !important;
-        text-shadow: none !important;
-        z-index: 2 !important;
-    }
-    
-    .form-floating > .form-control:focus ~ label,
-    .form-floating > .form-control:not(:placeholder-shown) ~ label,
-    .form-floating > .form-select ~ label {
-        background: transparent !important;
-        background-color: transparent !important;
-        opacity: 1 !important;
-        text-shadow: none !important;
-    }
-    
-    /* Hide placeholder to prevent double text */
-    .form-floating > .form-control::placeholder,
-    .form-floating > .form-select::placeholder {
-        color: transparent !important;
-        opacity: 0 !important;
-    }
-    
-    .form-control::placeholder {
-        color: rgba(229, 231, 235, 0.5) !important;
-    }
-    
-    /* Price preview styling */
-    .price-preview {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #28a745 !important;
-        margin-top: 5px;
-        padding: 0.5rem;
-        background: rgba(40, 167, 69, 0.1);
-        border: 1px solid rgba(40, 167, 69, 0.3);
-        border-radius: 8px;
-        text-align: center;
-    }
-    
-    /* Switch styling */
-    .form-check-input {
-        background-color: rgba(26, 15, 10, 0.4) !important;
-        border: 1px solid rgba(212, 165, 116, 0.5) !important;
-    }
-    
-    .form-check-input:checked {
-        background-color: #D4A574 !important;
-        border-color: #D4A574 !important;
-    }
-    
-    .form-check-label {
-        color: #e5e7eb !important;
-    }
-    
-    .form-check-label strong {
-        color: #D4A574 !important;
-    }
-    
-    .text-muted {
-        color: rgba(229, 231, 235, 0.7) !important;
-    }
-</style>
 @endpush

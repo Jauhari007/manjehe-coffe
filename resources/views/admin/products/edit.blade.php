@@ -7,76 +7,6 @@
 @push('styles')
 <style>
     /* Dark Coffee Theme for Edit Product Form */
-    .icon-selector {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 12px;
-        max-height: 350px;
-        overflow-y: auto;
-        border: 1px solid rgba(212, 165, 116, 0.3);
-        border-radius: 12px;
-        padding: 20px;
-        background: linear-gradient(135deg, rgba(26, 15, 10, 0.4), rgba(26, 15, 10, 0.2)) !important;
-        backdrop-filter: blur(10px);
-    }
-    
-    .icon-selector::-webkit-scrollbar {
-        width: 8px;
-    }
-    
-    .icon-selector::-webkit-scrollbar-track {
-        background: rgba(212, 165, 116, 0.1);
-        border-radius: 10px;
-    }
-    
-    .icon-selector::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #D4A574, rgba(212, 165, 116, 0.8));
-        border-radius: 10px;
-    }
-    
-    .icon-option {
-        text-align: center;
-        padding: 15px 10px;
-        border: 2px solid rgba(212, 165, 116, 0.2);
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: rgba(26, 15, 10, 0.3) !important;
-        color: #e5e7eb !important;
-    }
-    
-    .icon-option:hover {
-        border-color: #D4A574 !important;
-        background: rgba(212, 165, 116, 0.15) !important;
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(212, 165, 116, 0.2);
-        color: #D4A574 !important;
-    }
-    
-    .icon-option.selected {
-        border-color: #D4A574 !important;
-        background: linear-gradient(135deg, #D4A574, rgba(212, 165, 116, 0.8)) !important;
-        color: #2D1810 !important;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(212, 165, 116, 0.3);
-    }
-    
-    .icon-option i {
-        font-size: 24px;
-        margin-bottom: 8px;
-        display: block;
-        transition: transform 0.3s ease;
-    }
-    
-    .icon-option:hover i {
-        transform: scale(1.1);
-    }
-    
-    .icon-option small {
-        font-size: 0.75rem;
-        font-weight: 500;
-        text-transform: capitalize;
-    }
     
     /* Form Styling - Dark Theme */
     .card {
@@ -125,102 +55,8 @@
         color: #D4A574 !important;
     }
     
-    /* Remove all white backgrounds from inputs */
-    .form-control,
-    .form-select,
-    input[type="text"],
-    input[type="number"],
-    textarea,
-    select {
-        background: rgba(26, 15, 10, 0.4) !important;
-        background-color: rgba(26, 15, 10, 0.4) !important;
-    }
-    
-    .form-control:focus,
-    .form-select:focus,
-    input[type="text"]:focus,
-    input[type="number"]:focus,
-    textarea:focus,
-    select:focus {
-        background: rgba(26, 15, 10, 0.6) !important;
-        background-color: rgba(26, 15, 10, 0.6) !important;
-    }
-    
     .form-control::placeholder {
         color: rgba(229, 231, 235, 0.5) !important;
-    }
-    
-    /* Completely Remove Floating Label Double Text Effect */
-    .form-floating > label {
-        color: #D4A574 !important;
-        font-weight: 500;
-        background: transparent !important;
-        padding: 0.375rem 0.75rem !important;
-        border-radius: 6px !important;
-        opacity: 1 !important;
-        text-shadow: none !important;
-        z-index: 2 !important;
-    }
-    
-    /* Hide placeholder text to prevent double effect */
-    .form-floating > .form-control::placeholder,
-    .form-floating > .form-select::placeholder {
-        color: transparent !important;
-        opacity: 0 !important;
-    }
-    
-    /* Ensure clean label display without Bootstrap conflicts */
-    .form-floating > .form-control:focus ~ label,
-    .form-floating > .form-control:not(:placeholder-shown) ~ label,
-    .form-floating > .form-select ~ label {
-        background: transparent !important;
-        opacity: 1 !important;
-        text-shadow: none !important;
-        transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem) !important;
-        top: 0px !important;
-    }
-    
-    /* Clean input styling without interference */
-    .form-floating > .form-control:focus,
-    .form-floating > .form-control:not(:placeholder-shown),
-    .form-floating > .form-select:focus,
-    .form-floating > .form-select:not([value=""]) {
-        padding-top: 1.625rem !important;
-        padding-bottom: 0.625rem !important;
-    }
-    
-    /* Force override any Bootstrap default styling */
-    .form-floating label {
-        background: transparent !important;
-        opacity: 1 !important;
-        text-shadow: none !important;
-    }
-    
-    /* Feature Input Styling */
-    .feature-input {
-        margin-bottom: 15px;
-    }
-    
-    .input-group .form-control {
-        border-radius: 10px 0 0 10px !important;
-    }
-    
-    .input-group .btn {
-        border-radius: 0 10px 10px 0 !important;
-        border-left: none;
-    }
-    
-    /* Price Preview */
-    .price-preview {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #10b981 !important;
-        margin-top: 10px;
-        padding: 0.75rem;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        border-radius: 10px;
-        text-align: center;
     }
     
     /* Preview Card Enhancement */
@@ -239,13 +75,6 @@
         box-shadow: 0 20px 50px rgba(212, 165, 116, 0.4);
     }
     
-    .preview-icon {
-        font-size: 4rem !important;
-        margin-bottom: 20px;
-        opacity: 0.9;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-    
     .preview-card h5 {
         font-weight: 700;
         margin-bottom: 10px;
@@ -256,36 +85,6 @@
         color: #1a5f3f !important;
         font-weight: 800;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-    
-    /* Switch Styling */
-    .form-check-input {
-        background-color: rgba(26, 15, 10, 0.4) !important;
-        border: 1px solid rgba(212, 165, 116, 0.5) !important;
-        width: 3rem;
-        height: 1.5rem;
-    }
-    
-    .form-check-input:checked {
-        background-color: #D4A574 !important;
-        border-color: #D4A574 !important;
-    }
-    
-    .form-check-input:focus {
-        box-shadow: 0 0 0 0.2rem rgba(212, 165, 116, 0.25) !important;
-    }
-    
-    .form-check-label {
-        color: #e5e7eb !important;
-        margin-left: 0.75rem;
-    }
-    
-    .form-check-label strong {
-        color: #D4A574 !important;
-    }
-    
-    .form-check-label .text-muted {
-        color: rgba(229, 231, 235, 0.7) !important;
     }
     
     /* Button Styling */
@@ -347,22 +146,6 @@
         color: #3b82f6 !important;
     }
     
-    .btn-outline-danger {
-        border-color: #ef4444 !important;
-        color: #ef4444 !important;
-    }
-    
-    .btn-outline-danger:hover {
-        background: rgba(239, 68, 68, 0.1) !important;
-        border-color: #ef4444 !important;
-        color: #ef4444 !important;
-    }
-    
-    .btn-sm.btn-outline-primary {
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-    }
-    
     /* Badge Styling */
     .badge {
         font-weight: 500;
@@ -387,22 +170,55 @@
         border-color: rgba(245, 158, 11, 0.4);
     }
     
-    /* Text Color Adjustments */
+    /* Form input styling */
+    .feature-input {
+        margin-bottom: 15px;
+    }
+    
+    .input-group .form-control {
+        border-radius: 10px 0 0 10px !important;
+    }
+    
+    .input-group .btn {
+        border-radius: 0 10px 10px 0 !important;
+        border-left: none;
+    }
+    
+    .form-check-input {
+        background-color: rgba(26, 15, 10, 0.4) !important;
+        border: 1px solid rgba(212, 165, 116, 0.5) !important;
+        width: 3rem;
+        height: 1.5rem;
+    }
+    
+    .form-check-input:checked {
+        background-color: #D4A574 !important;
+        border-color: #D4A574 !important;
+    }
+    
+    .form-check-input:focus {
+        box-shadow: 0 0 0 0.2rem rgba(212, 165, 116, 0.25) !important;
+    }
+    
+    .form-check-label {
+        color: #e5e7eb !important;
+        margin-left: 0.75rem;
+    }
+    
     .text-muted {
         color: rgba(229, 231, 235, 0.7) !important;
     }
     
-    /* Invalid Feedback */
     .invalid-feedback {
         color: #ef4444 !important;
     }
     
-    /* Sticky Preview */
-    .position-sticky {
-        top: 2rem !important;
+    .img-thumbnail {
+        border: 2px solid rgba(212, 165, 116, 0.3) !important;
+        background: rgba(26, 15, 10, 0.2) !important;
+        border-radius: 10px !important;
     }
     
-    /* Responsive Design */
     @media (max-width: 768px) {
         .card-body {
             padding: 1.5rem;
@@ -412,30 +228,11 @@
             padding: 1rem;
         }
         
-        .icon-selector {
-            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-            gap: 10px;
-            padding: 15px;
-        }
-        
-        .icon-option {
-            padding: 12px 8px;
-        }
-        
-        .icon-option i {
-            font-size: 20px;
-        }
-        
         .preview-card {
             padding: 1.5rem;
         }
-        
-        .preview-icon {
-            font-size: 3rem !important;
-        }
     }
     
-    /* Animation */
     .card {
         animation: fadeInUp 0.6s ease-out;
     }
@@ -450,24 +247,6 @@
             transform: translateY(0);
         }
     }
-    
-    /* Small Text Adjustments */
-    small.text-muted {
-        color: rgba(229, 231, 235, 0.6) !important;
-    }
-    
-    /* Only fix the white background issue without breaking layout */
-    .form-floating > label:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(26, 15, 10, 0.95) !important;
-        border-radius: 4px;
-        z-index: -1;
-    }
 </style>
 @endpush
 
@@ -475,11 +254,285 @@
     <div class="row">
         <!-- Form Column -->
         <div class="col-lg-8">
-            <form action="{{ route('admin.products.update', $product) }}" method="POST" id="productForm">
+            <form action="{{ route('admin.products.update', $product) }}" 
+                  method="POST" 
+                  id="productForm" 
+                  enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 
-                @include('admin.products.form')
+                <!-- Product Information Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Informasi Produk
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Product Name -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">
+                                <i class="fas fa-coffee me-2"></i>
+                                Nama Produk
+                            </label>
+                            <input type="text" 
+                                   class="form-control @error('name') is-invalid @enderror" 
+                                   id="name" 
+                                   name="name" 
+                                   value="{{ old('name', $product->name) }}" 
+                                   placeholder="Contoh: Kopi Arabika Premium"
+                                   required>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">
+                                <i class="fas fa-align-left me-2"></i>
+                                Deskripsi
+                            </label>
+                            <textarea class="form-control @error('description') is-invalid @enderror" 
+                                      id="description" 
+                                      name="description" 
+                                      rows="4" 
+                                      placeholder="Masukkan deskripsi produk..."
+                                      required>{{ old('description', $product->description) }}</textarea>
+                            @error('description')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="row">
+                            <!-- Price -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">
+                                        <i class="fas fa-tag me-2"></i>
+                                        Harga (Rp)
+                                    </label>
+                                    <input type="text" 
+                                           class="form-control @error('price') is-invalid @enderror" 
+                                           id="price" 
+                                           name="price" 
+                                           value="{{ old('price', number_format($product->price, 0, ',', '.')) }}" 
+                                           placeholder="Contoh: 25.000"
+                                           required>
+                                    @error('price')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- Category -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">
+                                        <i class="fas fa-list me-2"></i>
+                                        Kategori
+                                    </label>
+                                    <select class="form-select @error('category') is-invalid @enderror" 
+                                            id="category" 
+                                            name="category" 
+                                            required>
+                                        <option value="">Pilih Kategori</option>
+                                        <option value="hot" {{ old('category', $product->category) == 'hot' ? 'selected' : '' }}>
+                                            Kopi Panas
+                                        </option>
+                                        <option value="cold" {{ old('category', $product->category) == 'cold' ? 'selected' : '' }}>
+                                            Kopi Dingin
+                                        </option>
+                                        <option value="beans" {{ old('category', $product->category) == 'beans' ? 'selected' : '' }}>
+                                            Biji Kopi
+                                        </option>
+                                    </select>
+                                    @error('category')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Images Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-images me-2"></i>
+                            Gambar Produk
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Current Images -->
+                        @if($product->images && $product->images->count() > 0)
+                            <div class="mb-4">
+                                <h6 class="text-muted mb-3">Gambar Saat Ini:</h6>
+                                <div class="row" id="currentImages">
+                                    @foreach($product->images as $image)
+                                        <div class="col-md-4 mb-3">
+                                            <div class="position-relative">
+                                                <img src="{{ Storage::url($image->image_path) }}" 
+                                                     class="img-thumbnail" 
+                                                     alt="Product Image" 
+                                                     style="width: 100%; height: 150px; object-fit: cover;">
+                                                <span class="badge bg-info position-absolute top-0 start-0 m-2">
+                                                    Gambar {{ $loop->iteration }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
+                        <!-- Upload New Images -->
+                        <div class="mb-3">
+                            <label for="images" class="form-label">
+                                Upload Gambar Baru (Opsional)
+                            </label>
+                            <input type="file" 
+                                   class="form-control @error('images') is-invalid @enderror @error('images.*') is-invalid @enderror" 
+                                   id="images" 
+                                   name="images[]" 
+                                   multiple 
+                                   accept="image/*"
+                                   onchange="previewImages(this)">
+                            <div class="form-text">
+                                Format: JPG, PNG, GIF, WEBP. Maksimal 5MB per file. Maksimal 5 gambar.
+                                <br><strong>Catatan:</strong> Jika Anda mengupload gambar baru, semua gambar lama akan diganti.
+                            </div>
+                            @error('images')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            @error('images.*')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Image Preview Container -->
+                        <div class="row" id="imagePreviewContainer"></div>
+                    </div>
+                </div>
+
+                <!-- Product Features Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-star me-2"></i>
+                            Fitur Produk
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="featuresContainer">
+                            @if($product->features && count($product->features) > 0)
+                                @foreach($product->features as $feature)
+                                    <div class="feature-input">
+                                        <div class="input-group">
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   name="features[]" 
+                                                   value="{{ $feature }}"
+                                                   placeholder="Contoh: 100% Arabika">
+                                            <button type="button" class="btn btn-outline-danger remove-feature">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="feature-input">
+                                    <div class="input-group">
+                                        <input type="text" 
+                                               class="form-control" 
+                                               name="features[]" 
+                                               placeholder="Contoh: 100% Arabika">
+                                        <button type="button" class="btn btn-outline-danger remove-feature">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        
+                        <button type="button" id="addFeature" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-plus me-2"></i>
+                            Tambah Fitur
+                        </button>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Settings Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fab fa-whatsapp me-2"></i>
+                            Pengaturan WhatsApp
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="whatsapp_text" class="form-label">
+                                Custom Text WhatsApp (Opsional)
+                            </label>
+                            <textarea class="form-control" 
+                                      id="whatsapp_text" 
+                                      name="whatsapp_text" 
+                                      rows="3" 
+                                      placeholder="Text khusus untuk WhatsApp...">{{ old('whatsapp_text', $product->whatsapp_text) }}</textarea>
+                            <div class="form-text">
+                                Jika kosong, akan menggunakan template default.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-cog me-2"></i>
+                            Pengaturan
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" 
+                                           type="checkbox" 
+                                           id="is_active" 
+                                           name="is_active" 
+                                           value="1" 
+                                           {{ old('is_active', $product->is_active) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="is_active">
+                                        <i class="fas fa-eye me-2"></i>
+                                        Aktif
+                                    </label>
+                                </div>
+                                <small class="text-muted">Produk akan ditampilkan di website</small>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" 
+                                           type="checkbox" 
+                                           id="is_featured" 
+                                           name="is_featured" 
+                                           value="1" 
+                                           {{ old('is_featured', $product->is_featured) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="is_featured">
+                                        <i class="fas fa-star me-2"></i>
+                                        Produk Unggulan
+                                    </label>
+                                </div>
+                                <small class="text-muted">Akan ditampilkan di bagian unggulan</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Action Buttons -->
                 <div class="card">
@@ -494,7 +547,7 @@
                                     <i class="fas fa-eye me-2"></i>
                                     Lihat Detail
                                 </a>
-                                <button type="submit" class="btn btn-primary btn-loading">
+                                <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save me-2"></i>
                                     Update Produk
                                 </button>
@@ -517,9 +570,6 @@
                     </div>
                     <div class="card-body">
                         <div class="preview-card" id="productPreview">
-                            <div class="preview-icon">
-                                <i class="{{ $product->icon ?? 'fas fa-coffee' }}" id="previewIcon"></i>
-                            </div>
                             <h5 id="previewName">{{ $product->name }}</h5>
                             <p class="mb-2" id="previewCategory">
                                 @switch($product->category)
@@ -562,46 +612,278 @@
 @endsection
 
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-    // Real-time preview updates
-    $('#name').on('input', function() {
-        const name = $(this).val() || 'Nama Produk';
-        $('#previewName').text(name);
-    });
-
-    $('#description').on('input', function() {
-        const desc = $(this).val() || 'Deskripsi produk akan muncul di sini...';
-        $('#previewDescription').text(desc);
-    });
-
-    $('#category').on('change', function() {
-        const category = $(this).val();
-        let categoryText = 'Kategori';
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Features Management
+    initializeFeaturesManagement();
+    
+    // Initialize Form Submission
+    initializeFormSubmission();
+    
+    // Initialize Image Preview
+    initializeImagePreview();
+    
+    // Initialize Price Formatting
+    initializePriceFormatting();
+    
+    // Initialize Preview Updates
+    initializePreviewUpdates();
+    
+    function initializeFeaturesManagement() {
+        const featuresContainer = document.getElementById('featuresContainer');
+        const addFeatureBtn = document.getElementById('addFeature');
         
-        switch(category) {
-            case 'hot':
-                categoryText = 'Kopi Panas';
-                break;
-            case 'cold':
-                categoryText = 'Kopi Dingin';
-                break;
-            case 'beans':
-                categoryText = 'Biji Kopi';
-                break;
-        }
+        if (!featuresContainer || !addFeatureBtn) return;
         
-        $('#previewCategory').text(categoryText);
-    });
-
-    // Update features preview
-    function updatePreview() {
-        const features = [];
-        $('input[name="features[]"]').each(function() {
-            if ($(this).val().trim()) {
-                features.push($(this).val().trim());
+        // Add feature button handler
+        addFeatureBtn.addEventListener('click', function() {
+            const newFeatureDiv = document.createElement('div');
+            newFeatureDiv.className = 'feature-input';
+            newFeatureDiv.innerHTML = `
+                <div class="input-group">
+                    <input type="text" class="form-control" name="features[]" 
+                           placeholder="Contoh: 100% Arabika">
+                    <button type="button" class="btn btn-outline-danger remove-feature">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            featuresContainer.appendChild(newFeatureDiv);
+            
+            // Add event listener to the new remove button
+            const removeBtn = newFeatureDiv.querySelector('.remove-feature');
+            if (removeBtn) {
+                removeBtn.addEventListener('click', function() {
+                    newFeatureDiv.remove();
+                    updateFeaturePreview();
+                });
+            }
+            
+            // Add event listener for preview update
+            const newInput = newFeatureDiv.querySelector('input[name="features[]"]');
+            if (newInput) {
+                newInput.addEventListener('input', updateFeaturePreview);
             }
         });
+        
+        // Remove feature button handlers for existing features
+        featuresContainer.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-feature')) {
+                const featureDiv = e.target.closest('.feature-input');
+                if (featureDiv) {
+                    featureDiv.remove();
+                    updateFeaturePreview();
+                }
+            }
+        });
+    }
+    
+    function initializeFormSubmission() {
+        const productForm = document.getElementById('productForm');
+        if (!productForm) return;
+        
+        productForm.addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                // Show loading state
+                submitBtn.disabled = true;
+                const originalContent = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Memperbarui...';
+                
+                // Clean price value before submit
+                const priceInput = document.getElementById('price');
+                if (priceInput && priceInput.value) {
+                    priceInput.value = priceInput.value.replace(/[^0-9]/g, '');
+                }
+                
+                // Re-enable after timeout in case of error
+                setTimeout(function() {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalContent;
+                    }
+                }, 10000);
+            }
+        });
+    }
+    
+    function initializeImagePreview() {
+        window.previewImages = function(input) {
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            if (!previewContainer || !input) return;
+            
+            previewContainer.innerHTML = '';
+
+            if (input.files && input.files.length > 0) {
+                const maxFiles = 5;
+                const files = Array.from(input.files).slice(0, maxFiles);
+
+                files.forEach((file, index) => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const col = document.createElement('div');
+                        col.className = 'col-md-4 mb-3 preview-item';
+                        col.innerHTML = `
+                            <div class="position-relative">
+                                <img src="${e.target.result}" class="img-thumbnail preview-image" 
+                                     alt="Preview" style="width: 100%; height: 150px; object-fit: cover;">
+                                <span class="badge bg-success position-absolute top-0 start-0 m-2">
+                                    Gambar Baru ${index + 1}
+                                </span>
+                            </div>
+                        `;
+                        previewContainer.appendChild(col);
+                    };
+
+                    reader.readAsDataURL(file);
+                });
+            }
+        };
+    }
+    
+    function initializePriceFormatting() {
+        const priceInput = document.getElementById('price');
+        if (!priceInput) return;
+        
+        priceInput.addEventListener('input', function() {
+            let value = this.value.replace(/[^0-9]/g, '');
+            
+            if (value) {
+                let formatted = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                this.value = formatted;
+                
+                const previewPrice = document.getElementById('previewPrice');
+                if (previewPrice) {
+                    previewPrice.textContent = 'Rp ' + formatted;
+                }
+            } else {
+                const previewPrice = document.getElementById('previewPrice');
+                if (previewPrice) {
+                    previewPrice.textContent = 'Rp 0';
+                }
+            }
+        });
+    }
+    
+    function initializePreviewUpdates() {
+        // Real-time preview updates
+        const nameInput = document.getElementById('name');
+        if (nameInput) {
+            nameInput.addEventListener('input', function() {
+                const previewName = document.getElementById('previewName');
+                if (previewName) {
+                    previewName.textContent = this.value || 'Nama Produk';
+                }
+            });
+        }
+
+        const descInput = document.getElementById('description');
+        if (descInput) {
+            descInput.addEventListener('input', function() {
+                const previewDesc = document.getElementById('previewDescription');
+                if (previewDesc) {
+                    previewDesc.textContent = this.value || 'Deskripsi produk akan muncul di sini...';
+                }
+            });
+        }
+
+        const categorySelect = document.getElementById('category');
+        if (categorySelect) {
+            categorySelect.addEventListener('change', function() {
+                const previewCategory = document.getElementById('previewCategory');
+                if (previewCategory) {
+                    let categoryText = 'Kategori';
+                    
+                    switch(this.value) {
+                        case 'hot':
+                            categoryText = 'Kopi Panas';
+                            break;
+                        case 'cold':
+                            categoryText = 'Kopi Dingin';
+                            break;
+                        case 'beans':
+                            categoryText = 'Biji Kopi';
+                            break;
+                        default:
+                            categoryText = 'Kategori';
+                    }
+                    
+                    previewCategory.textContent = categoryText;
+                }
+            });
+        }
+
+        // Features preview with event delegation
+        document.addEventListener('input', function(e) {
+            if (e.target && e.target.matches && e.target.matches('input[name="features[]"]')) {
+                updateFeaturePreview();
+            }
+        });
+
+        // Status preview
+        const isActiveInput = document.getElementById('is_active');
+        const isFeaturedInput = document.getElementById('is_featured');
+        
+        function updateStatusPreview() {
+            const previewStatus = document.getElementById('previewStatus');
+            if (!previewStatus) return;
+            
+            let statusHtml = '';
+            
+            const isActive = isActiveInput ? isActiveInput.checked : false;
+            const isFeatured = isFeaturedInput ? isFeaturedInput.checked : false;
+            
+            if (isActive) {
+                statusHtml += '<span class="badge bg-success me-1">Aktif</span>';
+            } else {
+                statusHtml += '<span class="badge bg-danger me-1">Nonaktif</span>';
+            }
+            
+            if (isFeatured) {
+                statusHtml += '<span class="badge bg-warning text-dark">Unggulan</span>';
+            }
+            
+            previewStatus.innerHTML = statusHtml;
+        }
+
+        if (isActiveInput) {
+            isActiveInput.addEventListener('change', updateStatusPreview);
+        }
+        
+        if (isFeaturedInput) {
+            isFeaturedInput.addEventListener('change', updateStatusPreview);
+        }
+
+        // Initial preview updates
+        updateFeaturePreview();
+        updateStatusPreview();
+        
+        // Trigger price formatting if price exists
+        const priceInput = document.getElementById('price');
+        if (priceInput && priceInput.value) {
+            const event = new Event('input');
+            priceInput.dispatchEvent(event);
+        }
+    }
+    
+    // Feature preview update function
+    function updateFeaturePreview() {
+        const features = [];
+        const featureInputs = document.querySelectorAll('input[name="features[]"]');
+        
+        if (featureInputs) {
+            featureInputs.forEach(input => {
+                if (input && input.value && input.value.trim()) {
+                    features.push(input.value.trim());
+                }
+            });
+        }
+
+        const previewFeatures = document.getElementById('previewFeatures');
+        if (!previewFeatures) return;
 
         let featuresHtml = '';
         if (features.length > 0) {
@@ -612,42 +894,29 @@ $(document).ready(function() {
             featuresHtml += '</div>';
         }
         
-        $('#previewFeatures').html(featuresHtml);
+        previewFeatures.innerHTML = featuresHtml;
     }
-
-    // Update preview when features change
-    $(document).on('input', 'input[name="features[]"]', updatePreview);
-
-    // Status preview
-    $('#is_active, #is_featured').on('change', function() {
-        let statusHtml = '';
-        
-        if ($('#is_active').is(':checked')) {
-            statusHtml += '<span class="badge bg-success me-1">Aktif</span>';
-        } else {
-            statusHtml += '<span class="badge bg-danger me-1">Nonaktif</span>';
+    
+    // Clear validation errors when inputs change
+    document.addEventListener('input', function(e) {
+        if (e.target && e.target.matches && e.target.matches('input, select, textarea')) {
+            e.target.classList.remove('is-invalid');
+            const feedbackDiv = e.target.parentNode ? e.target.parentNode.querySelector('.invalid-feedback') : null;
+            if (feedbackDiv) {
+                feedbackDiv.textContent = '';
+            }
         }
-        
-        if ($('#is_featured').is(':checked')) {
-            statusHtml += '<span class="badge bg-warning text-dark">Unggulan</span>';
-        }
-        
-        $('#previewStatus').html(statusHtml);
     });
-
-    // Initial preview update
-    updatePreview();
+    
+    // Delete confirmation
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('btn-delete')) {
+            e.preventDefault();
+            if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
+                e.target.closest('form').submit();
+            }
+        }
+    });
 });
 </script>
-
-@section('content')
-<div class="container">
-    <h1>Edit Produk Kopi</h1>
-    <form action="{{ route('admin.products.update', $product) }}" method="POST">
-        @csrf
-        @method('PUT')
-        @include('admin.products.form', ['product' => $product])
-        <button type="submit" class="btn btn-primary">Update</button>
-    </form>
-</div>
-@endsection
+@endpush

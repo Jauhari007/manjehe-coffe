@@ -8,6 +8,20 @@
     --sidebar-width: 250px;
 }
 
+.logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    object-fit: contain;
+}
+
+.coffee-cup img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    animation: bounce 1s infinite;
+}
+
 /* Bootstrap overrides for coffee theme */
 .bg-gradient-primary {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
@@ -396,4 +410,5 @@
         border-color: #2d3748;
         color: white;
     }
+
 }

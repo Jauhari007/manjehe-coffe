@@ -1,15 +1,15 @@
 {{-- File: resources/views/home/index.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Coffee Manjehe - Premium Coffee Experience')
+@section('title', 'Manjehe Coffee - Premium Coffee Experience')
 
 @section('content')
     <div id="preloader">
         <div class="coffee-loader">
             <div class="coffee-cup">
-                <i class="fas fa-coffee"></i>
+                <img src="{{ asset('assets/manjehe_logo.png') }}" alt="Coffee Manjehe Logo" style="width: 80px; height: 80px; object-fit: contain;">
             </div>
-            <div class="loading-text">Loading Coffee Manjehe...</div>
+            <div class="loading-text">Loading Manjehe Coffee...</div>
         </div>
     </div>
 
@@ -17,8 +17,8 @@
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">
-                <i class="fas fa-coffee"></i>
-                <span>Coffee Manjehe</span>
+                <img src="{{ asset('assets/manjehe_logo.png') }}" alt="Coffee Manjehe Logo" style="width: 50px; height: 50px; margin-right: 12px;">
+                <span>Manjehe Coffee</span>
             </div>
             <ul class="nav-links">
                 <li><a href="#home" data-text="Home"><i class="fas fa-home"></i>Home</a></li>
@@ -34,9 +34,6 @@
         </div>
     </nav>
 
-    <!-- Cursor Effect -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -53,8 +50,8 @@
                 <span><i class="fas fa-star"></i> Premium Quality Since 2016</span>
             </div>
             <h1>
-                <span class="highlight">Coffee</span>
-                <span class="main-text">Manjehe</span>
+                <span class="highlight">Manjehe</span>
+                <span class="main-text">Coffee</span>
             </h1>
             <p class="hero-subtitle">
                 Discover the Art of Perfect Coffee<br>
@@ -87,7 +84,7 @@
         <div class="container">
             <div class="section-header" data-aos="fade-up">
                 <span class="section-badge">About Us</span>
-                <h2>The Story Behind<br><span class="highlight">Coffee Manjehe</span></h2>
+                <h2>The Story Behind<br><span class="highlight">Manjehe Coffee</span></h2>
             </div>
             
             <div class="about-content">
@@ -151,281 +148,182 @@
             </div>
             
             <div class="products-grid">
-                <div class="product-card" data-category="hot" data-aos="fade-up" data-aos-delay="100">
+                @foreach($products as $product)
+                <div class="product-card" 
+                    data-category="{{ $product->category }}" 
+                    data-aos="fade-up" 
+                    data-aos-delay="{{ $loop->index * 100 }}"
+                    data-product='{
+                        "name": "{{ $product->name }}",
+                        "description": "{{ str_replace('"', '\"', $product->description) }}",
+                        "price": {{ $product->price }},
+                        "category": "{{ $product->category }}",
+                        "images": [
+                            @foreach($product->images as $image)
+                                "{{ asset('storage/' . $image->image_path) }}"{{ !$loop->last ? ',' : '' }}
+                            @endforeach
+                        ],
+                        "features": {{ json_encode($product->features ?: []) }}
+                    }'>
+                    @if($product->is_featured)
+                    <div class="featured-badge">
+                        <i class="fas fa-crown"></i> Best Seller
+                    </div>
+                    @endif
                     <div class="product-image">
+                        @if($product->images->isNotEmpty())
+                            <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" alt="{{ $product->name }}" class="product-img">
+                        @else
                         <div class="product-icon">
-                            <i class="fas fa-mug-hot"></i>
+                            @switch($product->category)
+                                @case('hot')
+                                    <i class="fas fa-mug-hot"></i>
+                                    @break
+                                @case('cold')
+                                    <i class="fas fa-glass-whiskey"></i>
+                                    @break
+                                @case('beans')
+                                    <i class="fas fa-seedling"></i>
+                                    @break
+                                @default
+                                    <i class="fas fa-coffee"></i>
+                            @endswitch
                         </div>
+                        @endif
                         <div class="product-overlay">
                             <div class="quick-view">Quick View</div>
                         </div>
                     </div>
                     <div class="product-info">
-                        <div class="product-category">Hot Coffee</div>
-                        <h3>Exselsa</h3>
-                        <p>Bold dan aromatic exselsa dengan rasa yang intense. Perfect untuk memulai hari dengan energi maksimal.</p>
+                        <div class="product-category">
+                            @switch($product->category)
+                                @case('hot')
+                                    Hot Coffee
+                                    @break
+                                @case('cold')
+                                    Cold Coffee
+                                    @break
+                                @case('beans')
+                                    Coffee Beans
+                                    @break
+                            @endswitch
+                        </div>
+                        <h3>{{ $product->name }}</h3>
+                        <p>{{ $product->description }}</p>
                         <div class="product-features">
+                            @if($product->category === 'hot')
                             <span><i class="fas fa-star"></i> Premium Quality</span>
                             <span><i class="fas fa-fire"></i> Strong Taste</span>
-                        </div>
-                        <div class="product-bottom">
-                            <div class="price">
-                                <span class="current-price">Rp 60.000</span>
-                            </div>
-                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Exselsa%20" class="whatsapp-btn" target="_blank">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>Order Now</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card" data-category="hot" data-aos="fade-up" data-aos-delay="200">
-                    <div class="product-image">
-                        <div class="product-icon">
-                            <i class="fas fa-coffee"></i>
-                        </div>
-                        <div class="product-overlay">
-                            <div class="quick-view">Quick View</div>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Hot Coffee</div>
-                        <h3>Luwak Arabica</h3>
-                        <p>Rasa istimewa Kopi Luwak Arabica, perpaduan sempurna antara biji Arabica dan sentuhan alam.</p>
-                        <div class="product-features">
-                            <span><i class="fas fa-leaf"></i> Pure & Clean</span>
-                            <span><i class="fas fa-heart"></i> Balanced</span>
-                        </div>
-                        <div class="product-bottom">
-                            <div class="price">
-                                <span class="current-price">Rp 250.000</span>
-                            </div>
-                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Luwak%20Arabica%20" class="whatsapp-btn" target="_blank">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>Order Now</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card" data-category="cold" data-aos="fade-up" data-aos-delay="300">
-                    <div class="product-image">
-                        <div class="product-icon">
-                            <i class="fas fa-glass-whiskey"></i>
-                        </div>
-                        <div class="product-overlay">
-                            <div class="quick-view">Quick View</div>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Hot Coffee</div>
-                        <h3>Arabica</h3>
-                        <p>Nikmati aroma dan rasa kopi Arabika yang khas, sebuah perjalanan rasa yang tak terlupakan.</p>
-                        <div class="product-features">
+                            @elseif($product->category === 'cold')
                             <span><i class="fas fa-snowflake"></i> Cold Brew</span>
                             <span><i class="fas fa-sun"></i> Refreshing</span>
+                            @else
+                            <span><i class="fas fa-leaf"></i> Pure & Clean</span>
+                            <span><i class="fas fa-heart"></i> Balanced</span>
+                            @endif
                         </div>
                         <div class="product-bottom">
                             <div class="price">
-                                <span class="current-price">Rp 70.000</span>
+                                <span class="current-price">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                             </div>
-                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Arabica%20" class="whatsapp-btn" target="_blank">
+                            <a href="https://wa.me/6282334334737?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20{{ urlencode($product->name) }}%20" 
+                               class="whatsapp-btn" target="_blank">
                                 <i class="fab fa-whatsapp"></i>
                                 <span>Order Now</span>
                             </a>
                         </div>
                     </div>
                 </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
 
-                <div class="product-card" data-category="hot" data-aos="fade-up" data-aos-delay="400">
-                    <div class="product-image">
-                        <div class="product-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="product-overlay">
-                            <div class="quick-view">Quick View</div>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Hot Coffee</div>
-                        <h3>Arabica Lanang</h3>
-                        <p>Seduhan kopi Arabica Lanang memberikan sensasi yang berbeda, dengan rasa yang kuat dan mantap.</p>
-                        <div class="product-features">
-                            <span><i class="fas fa-palette"></i> Latte Art</span>
-                            <span><i class="fas fa-cloud"></i> Creamy</span>
-                        </div>
-                        <div class="product-bottom">
-                            <div class="price">
-                                <span class="current-price">Rp 80.000</span>
-                            </div>
-                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Kopi%20Arabica%20Lanang%20" class="whatsapp-btn" target="_blank">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>Order Now</span>
-                            </a>
+    <!-- Product Detail Modal -->
+    <div id="productDetailModal" class="product-detail-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="close-modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="product-detail-container">
+                <div class="product-gallery-section">
+                    <div class="main-image-container">
+                        <img src="" alt="" id="mainProductImage">
+                        <div class="image-nav">
+                            <button class="prev-image"><i class="fas fa-chevron-left"></i></button>
+                            <button class="next-image"><i class="fas fa-chevron-right"></i></button>
                         </div>
                     </div>
+                    <div class="product-thumbnails"></div>
                 </div>
-
-                <div class="product-card" data-category="hot" data-aos="fade-up" data-aos-delay="500">
-                    <div class="product-image">
-                        <div class="product-icon">
-                            <i class="fas fa-leaf"></i>
+                <div class="product-info-section">
+                    <div class="product-category-badge"></div>
+                    <h2 class="product-title"></h2>
+                    <div class="product-meta">
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(Premium Product)</span>
                         </div>
-                        <div class="product-overlay">
-                            <div class="quick-view">Quick View</div>
+                        <div class="product-availability">
+                            <i class="fas fa-check-circle"></i>
+                            <span>In Stock</span>
                         </div>
                     </div>
-                    <div class="product-info">
-                        <div class="product-category">Hot Coffee</div>
-                        <h3>Robusta</h3>
-                        <p>Kopi Robusta, teman setia di saat butuh kekuatan dan kualitas kopi yang tak tergantikan.</p>
-                        <div class="product-features">
-                            <span><i class="fas fa-signature"></i> Signature</span>
-                            <span><i class="fas fa-camera"></i> Instagrammable</span>
+                    <div class="product-description"></div>
+                    <div class="product-features-detail">
+                        <h3>Features</h3>
+                        <ul class="features-list">
+                            <!-- Features will be populated dynamically -->
+                        </ul>
+                    </div>
+                    <div class="product-price-section">
+                        <div class="price-wrapper">
+                            <span class="price-label">Price:</span>
+                            <span class="product-price"></span>
                         </div>
-                        <div class="product-bottom">
-                            <div class="price">
-                                <span class="current-price">Rp 50.000</span>
+                        <div class="quantity-selector">
+                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                            <input type="number" value="1" min="1" class="qty-input">
+                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <a href="" class="order-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            Order via WhatsApp
+                        </a>
+                        <button class="share-btn">
+                            <i class="fas fa-share-alt"></i>
+                            Share
+                        </button>
+                    </div>
+                    <div class="additional-info">
+                        <div class="info-item">
+                            <i class="fas fa-shipping-fast"></i>
+                            <div class="info-content">
+                                <h4>Free Delivery</h4>
+                                <p>For orders within Banyuwangi</p>
                             </div>
-                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Kopi%20Robusta%20" class="whatsapp-btn" target="_blank">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>Order Now</span>
-                            </a>
                         </div>
-                    </div>
-                </div>
-
-                <!-- NEW PRODUCTS START -->
-                <div class="product-card" data-category="hot" data-aos="fade-up" data-aos-delay="600">
-                    <div class="product-image">
-                        <div class="product-icon">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        <div class="product-overlay">
-                            <div class="quick-view">Quick View</div>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Hot Coffee</div>
-                        <h3>House Blend</h3>
-                        <p>Campuran istimewa racikan khusus Coffee Manjehe, perpaduan harmonis yang menciptakan rasa unik dan berkarakter.</p>
-                        <div class="product-features">
-                            <span><i class="fas fa-star"></i> House Special</span>
-                            <span><i class="fas fa-magic"></i> Unique Blend</span>
-                        </div>
-                        <div class="product-bottom">
-                            <div class="price">
-                                <span class="current-price">Rp 60.000</span>
+                        <div class="info-item">
+                            <i class="fas fa-medal"></i>
+                            <div class="info-content">
+                                <h4>Quality Guarantee</h4>
+                                <p>100% Original Product</p>
                             </div>
-                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20House%20Blend%20" class="whatsapp-btn" target="_blank">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>Order Now</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card" data-category="hot" data-aos="fade-up" data-aos-delay="700">
-                    <div class="product-image">
-                        <div class="product-icon">
-                            <i class="fas fa-crown"></i>
-                        </div>
-                        <div class="product-overlay">
-                            <div class="quick-view">Quick View</div>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Hot Coffee</div>
-                        <h3>Robusta Lanang</h3>
-                        <p>Kopi Robusta Lanang premium dengan karakter kuat dan body yang penuh. Sensasi rasa yang tak terlupakan untuk pecinta kopi sejati.</p>
-                        <div class="product-features">
-                            <span><i class="fas fa-fire"></i> Strong Body</span>
-                            <span><i class="fas fa-award"></i> Premium</span>
-                        </div>
-                        <div class="product-bottom">
-                            <div class="price">
-                                <span class="current-price">Rp 60.000</span>
-                            </div>
-                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Robusta%20Lanang%20" class="whatsapp-btn" target="_blank">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>Order Now</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card featured" data-category="beans" data-aos="fade-up" data-aos-delay="800">
-                    <div class="featured-badge">
-                        <i class="fas fa-crown"></i> Best Seller
-                    </div>
-                    <div class="product-image">
-                        <div class="product-icon">
-                            <i class="fas fa-seedling"></i>
-                        </div>
-                        <div class="product-overlay">
-                            <div class="quick-view">Quick View</div>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Coffee Beans</div>
-                        <h3>Biji Robusta Lanang</h3>
-                        <p>Biji kopi Robusta Lanang premium untuk home brewing. Freshly roasted dengan berbagai pilihan grind size. Perfect untuk espresso dan manual brew.</p>
-                        <div class="product-features">
-                            <span><i class="fas fa-home"></i> Home Brewing</span>
-                            <span><i class="fas fa-fire"></i> Fresh Roasted</span>
-                        </div>
-                        <div class="product-bottom">
-                            <div class="price">
-                                <span class="current-price">Rp 95.000</span>
-                                <span class="price-unit">/250g</span>
-                            </div>
-                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Biji%20Robusta%20Lanang%20" class="whatsapp-btn" target="_blank">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>Order Now</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- NEW PRODUCTS END -->
-
-                <div class="product-card featured" data-category="beans" data-aos="fade-up" data-aos-delay="900">
-                    <div class="featured-badge">
-                        <i class="fas fa-crown"></i> Best Seller
-                    </div>
-                    <div class="product-image">
-                        <div class="product-icon">
-                            <i class="fas fa-seedling"></i>
-                        </div>
-                        <div class="product-overlay">
-                            <div class="quick-view">Quick View</div>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">Coffee Beans</div>
-                        <h3>Biji Kopi Premium</h3>
-                        <p>Biji kopi premium Coffee Manjehe untuk home brewing. Freshly roasted dengan berbagai pilihan grind size.</p>
-                        <div class="product-features">
-                            <span><i class="fas fa-home"></i> Home Brewing</span>
-                            <span><i class="fas fa-fire"></i> Fresh Roasted</span>
-                        </div>
-                        <div class="product-bottom">
-                            <div class="price">
-                                <span class="current-price">Rp 85.000</span>
-                                <span class="price-unit">/250g</span>
-                            </div>
-                            <a href="https://wa.me/6285923253597?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20Biji%20Kopi%20Premium%20" class="whatsapp-btn" target="_blank">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>Order Now</span>
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-     <!-- Video Review Section -->
+    <!-- Video Review Section -->
 <section id="video-review" class="video-review">
     <div class="container">
         <div class="section-header">
@@ -583,6 +481,775 @@
 @endsection
 
 @push('scripts')
+<!-- Initialize Quick View -->
+<script>
+// ===== PRODUCT MODAL FUNCTIONALITY =====
+let currentProductData = null;
+let currentImageIndex = 0;
+
+// Initialize Product Modal
+function initProductModal() {
+    const modal = document.getElementById('productDetailModal');
+    const closeBtn = modal.querySelector('.close-modal');
+    const overlay = modal.querySelector('.modal-overlay');
+    
+    // Close modal events
+    closeBtn.addEventListener('click', closeProductModal);
+    overlay.addEventListener('click', closeProductModal);
+    
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeProductModal();
+        }
+    });
+    
+    // Image navigation
+    const prevBtn = modal.querySelector('.prev-image');
+    const nextBtn = modal.querySelector('.next-image');
+    
+    prevBtn.addEventListener('click', () => navigateImage('prev'));
+    nextBtn.addEventListener('click', () => navigateImage('next'));
+    
+    // Quantity controls
+    const minusBtn = modal.querySelector('.qty-btn.minus');
+    const plusBtn = modal.querySelector('.qty-btn.plus');
+    const qtyInput = modal.querySelector('.qty-input');
+    
+    minusBtn.addEventListener('click', () => {
+        const current = parseInt(qtyInput.value);
+        if (current > 1) {
+            qtyInput.value = current - 1;
+            updateOrderLink();
+        }
+    });
+    
+    plusBtn.addEventListener('click', () => {
+        const current = parseInt(qtyInput.value);
+        qtyInput.value = current + 1;
+        updateOrderLink();
+    });
+    
+    qtyInput.addEventListener('change', updateOrderLink);
+}
+
+// Open Product Modal
+function openProductModal(productData) {
+    currentProductData = productData;
+    currentImageIndex = 0;
+    
+    const modal = document.getElementById('productDetailModal');
+    
+    // Populate modal content
+    populateProductModal(productData);
+    
+    // Show modal with animation
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Add entrance animation
+    setTimeout(() => {
+        modal.querySelector('.modal-content').style.transform = 'scale(1)';
+        modal.querySelector('.modal-content').style.opacity = '1';
+    }, 10);
+}
+
+// Close Product Modal
+function closeProductModal() {
+    const modal = document.getElementById('productDetailModal');
+    const modalContent = modal.querySelector('.modal-content');
+    
+    // Add exit animation
+    modalContent.style.transform = 'scale(0.9)';
+    modalContent.style.opacity = '0';
+    
+    setTimeout(() => {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        
+        // Reset modal state
+        modalContent.style.transform = 'scale(0.9)';
+        modalContent.style.opacity = '0';
+    }, 300);
+}
+
+// Populate Modal Content
+function populateProductModal(productData) {
+    const modal = document.getElementById('productDetailModal');
+    
+    // Set product title
+    modal.querySelector('.product-title').textContent = productData.name;
+    
+    // Set category badge
+    const categoryBadge = modal.querySelector('.product-category-badge');
+    const categoryText = getCategoryDisplayName(productData.category);
+    categoryBadge.textContent = categoryText;
+    categoryBadge.className = `product-category-badge category-${productData.category}`;
+    
+    // Set description
+    modal.querySelector('.product-description').textContent = productData.description;
+    
+    // Set price
+    const priceElement = modal.querySelector('.product-price');
+    priceElement.textContent = `Rp ${formatPrice(productData.price)}`;
+    
+    // Handle images
+    setupProductImages(productData.images);
+    
+    // Set features
+    setupProductFeatures(productData.features, productData.category);
+    
+    // Setup order link
+    modal.querySelector('.qty-input').value = 1;
+    updateOrderLink();
+    
+    // Setup share functionality
+    setupShareButton(productData);
+}
+
+// Setup Product Images
+function setupProductImages(images) {
+    const modal = document.getElementById('productDetailModal');
+    const mainImage = modal.querySelector('#mainProductImage');
+    const thumbnailsContainer = modal.querySelector('.product-thumbnails');
+    const imageNavigation = modal.querySelector('.image-nav');
+    
+    if (!images || images.length === 0) {
+        // Show default icon if no images
+        mainImage.style.display = 'none';
+        imageNavigation.style.display = 'none';
+        thumbnailsContainer.innerHTML = '<div class="no-image"><i class="fas fa-coffee"></i></div>';
+        return;
+    }
+    
+    // Set main image
+    mainImage.src = images[0];
+    mainImage.alt = currentProductData.name;
+    mainImage.style.display = 'block';
+    
+    // Show/hide navigation based on image count
+    if (images.length > 1) {
+        imageNavigation.style.display = 'flex';
+        
+        // Create thumbnails
+        thumbnailsContainer.innerHTML = '';
+        images.forEach((imageSrc, index) => {
+            const thumbnail = document.createElement('img');
+            thumbnail.src = imageSrc;
+            thumbnail.alt = `${currentProductData.name} - Image ${index + 1}`;
+            thumbnail.className = `thumbnail ${index === 0 ? 'active' : ''}`;
+            
+            thumbnail.addEventListener('click', () => {
+                currentImageIndex = index;
+                updateMainImage();
+                updateThumbnailActive();
+            });
+            
+            thumbnailsContainer.appendChild(thumbnail);
+        });
+    } else {
+        imageNavigation.style.display = 'none';
+        thumbnailsContainer.innerHTML = '';
+    }
+}
+
+// Navigate Images
+function navigateImage(direction) {
+    const images = currentProductData.images;
+    if (!images || images.length <= 1) return;
+    
+    if (direction === 'prev') {
+        currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : images.length - 1;
+    } else {
+        currentImageIndex = currentImageIndex < images.length - 1 ? currentImageIndex + 1 : 0;
+    }
+    
+    updateMainImage();
+    updateThumbnailActive();
+}
+
+// Update Main Image
+function updateMainImage() {
+    const mainImage = document.getElementById('mainProductImage');
+    const images = currentProductData.images;
+    
+    if (images && images[currentImageIndex]) {
+        mainImage.src = images[currentImageIndex];
+        
+        // Add loading animation
+        mainImage.style.opacity = '0.5';
+        setTimeout(() => {
+            mainImage.style.opacity = '1';
+        }, 100);
+    }
+}
+
+// Update Thumbnail Active State
+function updateThumbnailActive() {
+    const thumbnails = document.querySelectorAll('.product-thumbnails .thumbnail');
+    thumbnails.forEach((thumb, index) => {
+        thumb.classList.toggle('active', index === currentImageIndex);
+    });
+}
+
+// Setup Product Features
+function setupProductFeatures(features, category) {
+    const featuresList = document.querySelector('.features-list');
+    
+    // Default features based on category if no specific features provided
+    let productFeatures = features && features.length > 0 ? features : getDefaultFeatures(category);
+    
+    featuresList.innerHTML = '';
+    productFeatures.forEach(feature => {
+        const li = document.createElement('li');
+        li.innerHTML = `<i class="fas fa-check"></i> ${feature}`;
+        featuresList.appendChild(li);
+    });
+}
+
+// Get Default Features by Category
+function getDefaultFeatures(category) {
+    const defaultFeatures = {
+        'hot': [
+            'Premium quality coffee beans',
+            'Traditional roasting method',
+            'Strong and aromatic taste',
+            'Perfect for morning boost',
+            'Locally sourced from Banyuwangi'
+        ],
+        'cold': [
+            'Refreshing cold brew',
+            'Smooth and balanced flavor',
+            'Perfect for hot weather',
+            'No added preservatives',
+            'Ready to serve'
+        ],
+        'beans': [
+            'Pure coffee beans',
+            'Freshly roasted',
+            'Can be ground to preference',
+            '100% Robusta variety',
+            'Traditional processing method'
+        ]
+    };
+    
+    return defaultFeatures[category] || defaultFeatures['hot'];
+}
+
+// Get Category Display Name
+function getCategoryDisplayName(category) {
+    const categoryNames = {
+        'hot': 'Hot Coffee',
+        'cold': 'Cold Coffee', 
+        'beans': 'Coffee Beans',
+        'all': 'All Coffee'
+    };
+    
+    return categoryNames[category] || 'Coffee Product';
+}
+
+// Format Price
+function formatPrice(price) {
+    return new Intl.NumberFormat('id-ID').format(price);
+}
+
+// Update Order Link
+function updateOrderLink() {
+    if (!currentProductData) return;
+    
+    const quantity = document.querySelector('.qty-input').value;
+    const orderBtn = document.querySelector('.order-btn');
+    
+    const message = `Halo Coffee Manjehe, saya ingin memesan:\n\n` +
+                   `Produk: ${currentProductData.name}\n` +
+                   `Jumlah: ${quantity}\n` +
+                   `Harga: Rp ${formatPrice(currentProductData.price * quantity)}\n\n` +
+                   `Mohon konfirmasi ketersediaan dan total pembayaran. Terima kasih!`;
+    
+    const whatsappUrl = `https://wa.me/6282334334737?text=${encodeURIComponent(message)}`;
+    orderBtn.href = whatsappUrl;
+}
+
+// Setup Share Button
+function setupShareButton(productData) {
+    const shareBtn = document.querySelector('.share-btn');
+    
+    shareBtn.addEventListener('click', function() {
+        const shareData = {
+            title: `${productData.name} - Coffee Manjehe`,
+            text: `Check out this amazing coffee: ${productData.name}`,
+            url: window.location.href
+        };
+        
+        if (navigator.share) {
+            navigator.share(shareData).catch(err => {
+                console.log('Share failed:', err);
+                fallbackShare(shareData);
+            });
+        } else {
+            fallbackShare(shareData);
+        }
+    });
+}
+
+// Fallback Share Function
+function fallbackShare(shareData) {
+    const shareUrl = encodeURIComponent(shareData.url);
+    const shareText = encodeURIComponent(`${shareData.text} - ${shareData.url}`);
+    
+    const shareOptions = [
+        { name: 'WhatsApp', url: `https://wa.me/?text=${shareText}`, icon: 'fab fa-whatsapp' },
+        { name: 'Facebook', url: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`, icon: 'fab fa-facebook' },
+        { name: 'Twitter', url: `https://twitter.com/intent/tweet?url=${shareUrl}&text=${encodeURIComponent(shareData.text)}`, icon: 'fab fa-twitter' },
+    ];
+    
+    // Create quick share popup
+    const sharePopup = document.createElement('div');
+    sharePopup.className = 'share-popup';
+    sharePopup.innerHTML = `
+        <div class="share-popup-content">
+            <h4>Share Product</h4>
+            <div class="share-options">
+                ${shareOptions.map(option => 
+                    `<a href="${option.url}" target="_blank" class="share-option">
+                        <i class="${option.icon}"></i> ${option.name}
+                    </a>`
+                ).join('')}
+            </div>
+            <button class="close-share">Close</button>
+        </div>
+    `;
+    
+    document.body.appendChild(sharePopup);
+    
+    // Style popup
+    Object.assign(sharePopup.style, {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        background: 'rgba(0, 0, 0, 0.8)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: '100000'
+    });
+    
+    // Close popup
+    sharePopup.querySelector('.close-share').addEventListener('click', () => {
+        sharePopup.remove();
+    });
+    
+    sharePopup.addEventListener('click', (e) => {
+        if (e.target === sharePopup) {
+            sharePopup.remove();
+        }
+    });
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    initProductModal();
+    
+    // Handle Quick View clicks
+    document.querySelectorAll('.quick-view').forEach(quickView => {
+        quickView.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const productCard = this.closest('.product-card');
+            if (!productCard) return;
+            
+            try {
+                const productData = JSON.parse(productCard.getAttribute('data-product'));
+                openProductModal(productData);
+            } catch (error) {
+                console.error('Error parsing product data:', error);
+                showNotification('Error loading product details', 'error');
+            }
+        });
+    });
+});
+
+// Add necessary CSS styles
+function addModalStyles() {
+    if (document.querySelector('#modal-styles')) return;
+    
+    const style = document.createElement('style');
+    style.id = 'modal-styles';
+    style.textContent = `
+        .product-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
+        }
+        
+        .product-detail-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            position: relative;
+            max-width: 1200px;
+            width: 95%;
+            max-height: 90vh;
+            background: var(--background-dark, #1a1a1a);
+            border-radius: 20px;
+            overflow: hidden;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-color, #d4a574);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background: var(--primary-color, #d4a574);
+            color: var(--background-dark, #1a1a1a);
+        }
+        
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 500px;
+            max-height: 90vh;
+            overflow: hidden;
+        }
+        
+        .product-gallery-section {
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .main-image-container {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        #mainProductImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 1rem;
+        }
+        
+        .prev-image, .next-image {
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .prev-image:hover, .next-image:hover {
+            background: var(--primary-color, #d4a574);
+            color: var(--background-dark, #1a1a1a);
+        }
+        
+        .product-thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .thumbnail:hover, .thumbnail.active {
+            opacity: 1;
+            border-color: var(--primary-color, #d4a574);
+        }
+        
+        .product-info-section {
+            padding: 2rem;
+            overflow-y: auto;
+            color: var(--text-light, #e0e0e0);
+        }
+        
+        .product-category-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            background: var(--primary-color, #d4a574);
+            color: var(--background-dark, #1a1a1a);
+        }
+        
+        .product-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color, #d4a574);
+            font-family: var(--font-primary, 'Playfair Display');
+        }
+        
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #ffc107;
+        }
+        
+        .product-availability {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #10b981;
+        }
+        
+        .product-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: var(--text-muted, #b0b0b0);
+        }
+        
+        .product-features-detail h3 {
+            color: var(--primary-color, #d4a574);
+            margin-bottom: 1rem;
+        }
+        
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light, #e0e0e0);
+        }
+        
+        .features-list i {
+            color: var(--primary-color, #d4a574);
+        }
+        
+        .product-price-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(212, 165, 116, 0.1);
+            border-radius: 10px;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color, #d4a574);
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .qty-btn {
+            background: var(--primary-color, #d4a574);
+            border: none;
+            color: var(--background-dark, #1a1a1a);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .qty-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .qty-input {
+            width: 60px;
+            text-align: center;
+            border: 1px solid var(--primary-color, #d4a574);
+            background: transparent;
+            color: var(--text-light, #e0e0e0);
+            border-radius: 5px;
+            padding: 0.5rem;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .order-btn {
+            flex: 1;
+            padding: 1rem;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .share-btn {
+            padding: 1rem;
+            background: rgba(212, 165, 116, 0.2);
+            border: 1px solid var(--primary-color, #d4a574);
+            color: var(--primary-color, #d4a574);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .share-btn:hover {
+            background: var(--primary-color, #d4a574);
+            color: var(--background-dark, #1a1a1a);
+        }
+        
+        .additional-info {
+            border-top: 1px solid rgba(212, 165, 116, 0.2);
+            padding-top: 1rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .info-item i {
+            color: var(--primary-color, #d4a574);
+            font-size: 1.2rem;
+            width: 24px;
+        }
+        
+        .info-content h4 {
+            margin: 0 0 0.2rem 0;
+            color: var(--text-light, #e0e0e0);
+        }
+        
+        .info-content p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted, #b0b0b0);
+        }
+        
+        @media (max-width: 768px) {
+            .product-detail-container {
+                grid-template-columns: 1fr;
+                max-height: none;
+            }
+            
+            .product-gallery-section {
+                padding: 1rem;
+            }
+            
+            .product-info-section {
+                padding: 1rem;
+                overflow-y: visible;
+            }
+            
+            .product-title {
+                font-size: 1.5rem;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+    `;
+    
+    document.head.appendChild(style);
+}
+
+// Initialize styles when DOM is ready
+document.addEventListener('DOMContentLoaded', addModalStyles);
+</script>
+
 <script>
     // ===== GLOBAL VARIABLES =====
 let isLoading = true;
@@ -711,53 +1378,7 @@ function initMobileMenu() {
     }
 }
 
-// ===== CUSTOM CURSOR =====
-function initCursor() {
-    const cursor = document.querySelector('.cursor');
-    const cursorFollower = document.querySelector('.cursor-follower');
-    
-    if (!cursor || !cursorFollower) return;
-    
-    let mouseX = 0;
-    let mouseY = 0;
-    let followerX = 0;
-    let followerY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
-    });
-    
-    // Smooth follower animation
-    function updateFollower() {
-        followerX += (mouseX - followerX) * 0.1;
-        followerY += (mouseY - followerY) * 0.1;
-        
-        cursorFollower.style.left = followerX + 'px';
-        cursorFollower.style.top = followerY + 'px';
-        
-        requestAnimationFrame(updateFollower);
-    }
-    updateFollower();
-    
-    // Cursor effects on interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, .product-card, .contact-item');
-    
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.style.transform = 'scale(1.5)';
-            cursorFollower.style.transform = 'scale(1.2)';
-        });
-        
-        el.addEventListener('mouseleave', () => {
-            cursor.style.transform = 'scale(1)';
-            cursorFollower.style.transform = 'scale(1)';
-        });
-    });
-}
+
 
 // ===== TYPING EFFECT =====
 function initTypingEffect() {
@@ -986,7 +1607,7 @@ function handleFormSubmit(e) {
         return;
     }
     
-    // Simulate form submission
+     // Simulate form submission
     const submitBtn = form.querySelector('.form-submit');
     const originalText = submitBtn.innerHTML;
     
@@ -1091,7 +1712,8 @@ function initSmoothScroll() {
             const target = document.querySelector(this.getAttribute('href'));
             
             if (target) {
-                const navHeight = document.getElementById('navbar').offsetHeight;
+                const navbar = document.getElementById('navbar');
+                const navHeight = navbar ? navbar.offsetHeight : 0;
                 const targetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight;
                 
                 window.scrollTo({
@@ -1102,6 +1724,352 @@ function initSmoothScroll() {
         });
     });
 }
+
+function handlePageLoad() {
+    // Additional load handling if needed
+    console.log('Coffee Manjehe website fully loaded!');
+}
+
+// ===== ADD CSS STYLES =====
+function addVideoStyles() {
+    if (document.querySelector('#video-styles')) return;
+    
+    const style = document.createElement('style');
+    style.id = 'video-styles';
+    style.textContent = `
+        .video-wrapper {
+            position: relative;
+        }
+        
+        .video-player {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+            background: #111;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .video-player:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(212, 165, 116, 0.3);
+        }
+        
+        .video-player .video-thumb {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+            transition: 0.4s;
+            z-index: 1;
+        }
+        
+        .video-player:hover .video-thumb {
+            filter: brightness(0.5);
+        }
+        
+        .video-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid var(--primary-color, #d4a574);
+            color: var(--primary-color, #d4a574);
+            font-size: 3rem;
+            line-height: 1;
+            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 2;
+            cursor: pointer;
+        }
+        
+        .video-play-btn:hover {
+            background: var(--primary-color, #d4a574);
+            color: var(--background-dark, #111);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .play-icon {
+            margin-left: 3px;
+        }
+        
+        .video-player.playing {
+            cursor: default;
+        }
+        
+        .video-player.playing .video-thumb,
+        .video-player.playing .video-play-btn {
+            display: none !important;
+        }
+
+        .video-player iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 20px;
+            z-index: 3;
+        }
+        
+        .share-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .share-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .share-modal-content {
+            position: relative;
+            background: var(--background-dark, #1a1a1a);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            border: 2px solid rgba(212, 165, 116, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .share-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+        }
+        
+        .share-header h3 {
+            color: var(--primary-color, #d4a574);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .close-share-modal {
+            background: none;
+            border: none;
+            color: var(--text-muted, #b0b0b0);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .close-share-modal:hover {
+            background: rgba(212, 165, 116, 0.1);
+            color: var(--primary-color, #d4a574);
+        }
+        
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .share-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            border-radius: 15px;
+            color: var(--text-light, #e0e0e0);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .share-option:hover {
+            background: rgba(212, 165, 116, 0.2);
+            transform: translateY(-2px);
+            color: var(--primary-color, #d4a574);
+            border-color: var(--primary-color, #d4a574);
+        }
+        
+        .share-option i {
+            font-size: 1.5rem;
+        }
+        
+        .share-option span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .share-option.facebook:hover { border-color: #1877f2; }
+        .share-option.twitter:hover { border-color: #1da1f2; }
+        .share-option.whatsapp:hover { border-color: #25d366; }
+        .share-option.telegram:hover { border-color: #0088cc; }
+        .share-option.copy:hover { border-color: var(--primary-color, #d4a574); }
+        
+        /* Video Info Styles */
+.video-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    background: rgba(212, 165, 116, 0.1);
+    border-radius: 10px;
+    border-left: 4px solid #d4a574;
+}
+
+.stat-item i {
+    color: #d4a574;
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.stat-item span {
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.video-description {
+    margin-bottom: 2rem;
+}
+
+.video-description p {
+    color: #b0b0b0;
+    line-height: 1.6;
+}
+
+.video-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.subscribe-btn, .share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.subscribe-btn {
+    background: #ff0000;
+    color: white;
+}
+
+.subscribe-btn:hover {
+    background: #cc0000;
+    transform: translateY(-2px);
+}
+
+.share-btn {
+    background: rgba(212, 165, 116, 0.2);
+    color: #d4a574;
+    border: 1px solid #d4a574;
+}
+
+.share-btn:hover {
+    background: #d4a574;
+    color: #1a1a1a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .video-play-btn {
+        width: 70px;
+        height: 70px;
+        font-size: 2.2rem;
+    }
+    
+    .share-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .video-notification {
+        right: 10px !important;
+        left: 10px !important;
+        max-width: none !important;
+    }
+    
+    .share-modal-content {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .video-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-play-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+    `;
+    
+    document.head.appendChild(style);
+}
+
+// Initialize styles and video functionality when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    addVideoStyles();
+    console.log('Coffee Manjehe video functionality initialized');
+});
+
+// Initialize when window loads
+window.addEventListener('load', function() {
+    console.log('Coffee Manjehe website fully loaded');
+});
 
 // ===== PRODUCT INTERACTIONS =====
 document.addEventListener('DOMContentLoaded', function() {
@@ -2238,6 +3206,22 @@ function initVideoPlayer(){
 
 @push('styles')
 <style>
+    .product-detail-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.product-detail-modal.active {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
 .video-wrapper{position:relative;}
 .video-player{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:20px;box-shadow:0 0 40px #000a;background:#111;cursor:pointer;}
 .video-player .video-thumb{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;filter:brightness(.7);transition:.4s;z-index:1;}

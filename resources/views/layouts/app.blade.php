@@ -6,7 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Coffee Manjehe - Premium Coffee Experience')</title>
     <meta name="description" content="@yield('meta_description', 'Coffee Manjehe - Premium coffee experience crafted with passion and dedication.')">
-    
+    <link rel="icon" type="image/png" href="{{ asset('assets/manjehe_logo.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/manjehe_logo.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/manjehe_logo.png') }}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('assets/manjehe_logo.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/manjehe_logo.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/manjehe_logo.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/manjehe_logo.png') }}">
+
+
     <!-- External CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
@@ -14,6 +22,8 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/product-images.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/product-detail-modal.css') }}">
     <style>
         /* ===== RESET & BASE STYLES ===== */
 * {
@@ -123,18 +133,6 @@ body {
     z-index: 9999;
     transition: transform 0.1s;
     mix-blend-mode: difference;
-}
-
-.cursor-follower {
-    position: fixed;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid var(--primary-color);
-    pointer-events: none;
-    z-index: 9998;
-    transition: all 0.3s ease;
-    opacity: 0.5;
 }
 
 /* ===== NAVIGATION ===== */
@@ -839,7 +837,6 @@ nav.scrolled {
     border-color: var(--primary-color);
     background: linear-gradient(135deg, var(--dark-primary), rgba(212, 165, 116, 0.1));
 }
-
 .featured-badge {
     position: absolute;
     top: 1rem;
@@ -2129,10 +2126,6 @@ nav.scrolled {
     <!-- Navigation -->
     @include('components.navbar')
 
-    <!-- Cursor Effect -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-
     <!-- Main Content -->
     <main>
         @yield('content')
@@ -2149,6 +2142,7 @@ nav.scrolled {
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/product-detail-modal.js') }}"></script>
     @stack('scripts')
 </body>
 </html>
