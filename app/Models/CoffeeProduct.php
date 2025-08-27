@@ -59,4 +59,18 @@ class CoffeeProduct extends Model
     {
         return $this->hasMany(ProductImage::class, 'coffee_product_id');
     }
+
+    // Use product_id in URLs instead of numeric id
+    public function getRouteKeyName()
+    {
+        return 'product_id';
+    }
+
+    // Allow fallback to numeric id if product_id missing
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('product_id', $value)
+            ->orWhere('id', $value)
+            ->firstOrFail();
+    }
 }

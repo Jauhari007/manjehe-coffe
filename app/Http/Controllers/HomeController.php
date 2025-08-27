@@ -49,4 +49,11 @@ class HomeController extends Controller
 
         return redirect()->back()->with('success', 'Pesan Anda telah dikirim.');
     }
+
+    public function showProduct(CoffeeProduct $product): View
+    {
+        // Eager load images
+        $product->load('images');
+        return view('home.detail-produk', compact('product'));
+    }
 }

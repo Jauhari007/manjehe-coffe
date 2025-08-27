@@ -5,11 +5,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CoffeeProductController;
+use App\Models\CoffeeProduct;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [HomeController::class, 'products'])->name('products');
 Route::post('/contact', [HomeController::class, 'contact'])->name('contact.store');
+// Product detail (public)
+Route::get('/product/{product:product_id}', [HomeController::class, 'showProduct'])->name('product.show');
 
 // Alias global untuk route('login') agar tidak error
 Route::get('/login', function() {

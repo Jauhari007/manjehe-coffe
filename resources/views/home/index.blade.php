@@ -191,7 +191,7 @@
                         </div>
                         @endif
                         <div class="product-overlay">
-                            <div class="quick-view">Quick View</div>
+                            <a href="{{ route('product.show', ['product' => $product->product_id ?: $product->id]) }}" class="quick-view" title="Lihat Detail {{ $product->name }}">Quick View</a>
                         </div>
                     </div>
                     <div class="product-info">
@@ -226,11 +226,17 @@
                             <div class="price">
                                 <span class="current-price">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                             </div>
-                            <a href="https://wa.me/6282334334737?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20{{ urlencode($product->name) }}%20" 
-                               class="whatsapp-btn" target="_blank">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>Order Now</span>
-                            </a>
+                            <div class="product-actions-stack">
+                                <a href="{{ route('product.show', ['product' => $product->product_id ?: $product->id]) }}" class="detail-btn" title="Detail {{ $product->name }}">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Detail</span>
+                                </a>
+                                <a href="https://wa.me/6282334334737?text=Halo%20Coffee%20Manjehe,%20saya%20ingin%20memesan%20{{ urlencode($product->name) }}%20" 
+                                   class="whatsapp-btn" target="_blank">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>Order Now</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -334,7 +340,7 @@
         
         <div class="video-container">
             <div class="video-wrapper">
-                <div class="video-player" data-video-id="3Ah5Jon9MiQ">
+                <div class="video-player" data-video-id="3Ah5Jon9MiQ" role="button" tabindex="0" aria-label="Play Coffee Manjehe Review Video">
                     <picture>
                         <img class="video-thumb" src="https://i.ytimg.com/vi/3Ah5Jon9MiQ/hqdefault.jpg" alt="Coffee Manjehe Review" loading="lazy">
                     </picture>
@@ -398,7 +404,8 @@
                         </div>
                         <div class="contact-details">
                             <h3>Phone</h3>
-                            <p>+62 8233 4334 737</p>
+                            <p>+62 823-3433-4737</p>
+                            <p>+62 812-3330-2500</p>
                             <span>Available 24/7</span>
                         </div>
                     </div>
@@ -409,7 +416,7 @@
                         </div>
                         <div class="contact-details">
                             <h3>Email</h3>
-                            <p>info@coffeemanjehe.com</p>
+                            <p>jajangnuryaman105@gmail.com</p>
                             <span>Quick response guaranteed</span>
                         </div>
                     </div>
@@ -420,7 +427,7 @@
                         </div>
                         <div class="contact-details">
                             <h3>Location</h3>
-                            <p>Kampunganyar-Banyuwangi, Indonesia</p>
+                            <p>Jl. Perkebunan Kalibendo, Dusun Kopencungking, Kp. Anyar, Kec. Glagah, Kabupaten Banyuwangi, Jawa Timur 68432</p>
                             <span>Traditional place</span>
                         </div>
                     </div>
@@ -429,7 +436,7 @@
                         <h3>Follow Us</h3>
                         <div class="social-icons">
                             <a href="https://www.instagram.com/manjehe.coffee?utm_source=ig_web_button_share_sheet&igsh=MW11dDUybjJtYndwZQ==" class="social-icon"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                            <a href="https://web.facebook.com/manjehe.coffee" class="social-icon"><i class="fab fa-facebook"></i></a>
                             <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
                             <a href="https://www.tiktok.com/@manjehecoffee?is_from_webapp=1&sender_device=pc" class="social-icon"><i class="fab fa-tiktok"></i></a>
                         </div>
@@ -853,23 +860,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initProductModal();
     
     // Handle Quick View clicks
-    document.querySelectorAll('.quick-view').forEach(quickView => {
-        quickView.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const productCard = this.closest('.product-card');
-            if (!productCard) return;
-            
-            try {
-                const productData = JSON.parse(productCard.getAttribute('data-product'));
-                openProductModal(productData);
-            } catch (error) {
-                console.error('Error parsing product data:', error);
-                showNotification('Error loading product details', 'error');
-            }
-        });
-    });
+    // Quick View link goes directly to dedicated detail page.
 });
 
 // Add necessary CSS styles
@@ -1263,6 +1254,11 @@ const typingTexts = [
 let typingIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
+
+// ===== SAFE STUBS (prevent errors if not yet implemented) =====
+function initCursor(){ /* cursor effect not implemented yet */ }
+function initVideoAnalytics(){ /* analytics tracking placeholder */ }
+function hideNotification(){ const n=document.querySelector('.video-notification'); if(n) n.remove(); }
 
 // ===== DOM CONTENT LOADED =====
 document.addEventListener('DOMContentLoaded', function() {
@@ -3172,33 +3168,43 @@ function initVideoPlayer(){
     const wrapper = document.querySelector('.video-player');
     if(!wrapper) return;
     const btn = wrapper.querySelector('.video-play-btn');
-    btn.addEventListener('click', () => {
-        const id = wrapper.getAttribute('data-video-id');
+    const thumb = wrapper.querySelector('.video-thumb');
+
+    function playVideo(){
+        // Prevent duplicate if already playing
+        if(wrapper.classList.contains('playing')) return;
+        const id = wrapper.getAttribute('data-video-id') || '3Ah5Jon9MiQ';
         const iframe = document.createElement('iframe');
         iframe.setAttribute('allowfullscreen','');
         iframe.setAttribute('title','Coffee Manjehe Review');
         iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
         iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('loading','lazy');
         iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`; 
-        iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;z-index:3;background:#000;';
-        
+        iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;z-index:3;background:#000;opacity:0;transition:opacity .35s ease';
+
         wrapper.classList.add('playing');
-        // hide controls instead of clearing to preserve aspect ratio
-        const thumb = wrapper.querySelector('.video-thumb');
         if(thumb) thumb.style.display='none';
-        btn.style.display='none';
+        if(btn) btn.style.display='none';
         wrapper.appendChild(iframe);
-        
-        // Ensure iframe is loaded and visible
-        iframe.onload = function() {
-            console.log('Video iframe loaded successfully');
-            iframe.style.opacity = '1';
-        };
-        iframe.style.opacity = '0';
-        setTimeout(() => {
-            iframe.style.opacity = '1';
-            iframe.style.transition = 'opacity 0.3s';
-        }, 100);
+
+        iframe.onload = () => { iframe.style.opacity = '1'; };
+    }
+
+    // Click handlers (button, thumbnail, or wrapper background)
+    if(btn) btn.addEventListener('click', playVideo);
+    if(thumb) thumb.addEventListener('click', playVideo);
+    wrapper.addEventListener('click', (e)=>{
+        // If user clicked wrapper (not already the button since button has its own handler)
+        if(e.target === wrapper) playVideo();
+    });
+
+    // Keyboard accessibility (Enter / Space)
+    wrapper.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            playVideo();
+        }
     });
 }
 </script>

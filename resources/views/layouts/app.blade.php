@@ -897,6 +897,9 @@ nav.scrolled {
     color: var(--background-dark);
     font-weight: 600;
     font-size: 1.1rem;
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block;
 }
 
 .product-info {
@@ -986,6 +989,41 @@ nav.scrolled {
     transition: var(--transition-bounce);
     position: relative;
     overflow: hidden;
+}
+
+/* Stack actions (Detail + WhatsApp) */
+.product-actions-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: flex-end;
+}
+
+.detail-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(212,165,116,0.12);
+    color: var(--primary-color);
+    padding: 0.6rem 1rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    border: 1px solid rgba(212,165,116,0.3);
+    backdrop-filter: blur(6px);
+    transition: var(--transition-smooth);
+}
+.detail-btn:hover {
+    background: var(--primary-color);
+    color: var(--background-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212,165,116,0.3);
+}
+@media (max-width: 640px){
+    .product-bottom {flex-direction: column; align-items: flex-start;}
+    .product-actions-stack {width: 100%; align-items: stretch;}
+    .detail-btn, .whatsapp-btn {justify-content: center; width: 100%;}
 }
 
 .whatsapp-btn::before {

@@ -12,7 +12,7 @@
                     </p>
                     <div class="footer-social">
                         <a href="https://www.instagram.com/manjehe.coffee" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/share/19S1uueYBu/" class="social-icon"><i class="fab fa-facebook"></i></a>
+                        <a href="https://web.facebook.com/manjehe.coffee" class="social-icon"><i class="fab fa-facebook"></i></a>
                         <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
                         <a href="https://www.tiktok.com/@manjehecoffee" class="social-icon" target="_blank"><i class="fab fa-tiktok"></i></a>
                     </div>
@@ -55,7 +55,7 @@
             
             <div class="footer-bottom">
                 <div class="footer-copyright">
-                    <p>&copy; 2024 Coffee Manjehe. All rights reserved.</p>
+                    <p>&copy; 2025 Manjehe Coffee. All rights reserved.</p>
                     <p>Created by Pmm Kampunganyar in Banyuwangi, Indonesia</p>
                 </div>
             </div>
