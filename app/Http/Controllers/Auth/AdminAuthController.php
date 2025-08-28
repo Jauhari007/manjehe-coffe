@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use App\Models\Admin;
+use App\Models\AdminActivityLog;
 
 class AdminAuthController extends Controller
 {
@@ -31,6 +32,14 @@ class AdminAuthController extends Controller
         // Laravel 12 - improved authentication attempt
         if (Auth::guard('admin')->attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
+            // log login
+            $admin = Auth::guard('admin')->user();
+            AdminActivityLog::create([
+                'admin_id'=>$admin->id,
+                'action'=>'login',
+                'ip_address'=>$request->ip(),
+                'user_agent'=> substr($request->userAgent(),0,255)
+            ]);
             
             // Laravel 12 - redirect to intended or default dashboard
             return redirect()->intended(route('admin.dashboard'));
@@ -48,6 +57,15 @@ class AdminAuthController extends Controller
             'session_id' => $request->session()->getId()
         ]);
         
+        $admin = Auth::guard('admin')->user();
+        if($admin){
+            AdminActivityLog::create([
+                'admin_id'=>$admin->id,
+                'action'=>'logout',
+                'ip_address'=>$request->ip(),
+                'user_agent'=> substr($request->userAgent(),0,255)
+            ]);
+        }
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

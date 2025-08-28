@@ -415,20 +415,16 @@
                 </div>
             </div>
             
-            <div class="dropdown">
+            <div class="d-flex align-items-center">
+            <div class="dropdown me-2">
                 <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
                     <i class="fas fa-user-circle me-2"></i>
                     {{ Auth::guard('admin')->user()->name }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ route('admin.profile.show') }}">
                             <i class="fas fa-user me-2"></i>Profile
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-cog me-2"></i>Settings
                         </a>
                     </li>
                     <li>
@@ -437,6 +433,12 @@
                         </a>
                     </li>
                 </ul>
+            </div>
+            @if(Request::routeIs('admin.dashboard'))
+                <button type="button" class="btn btn-outline-danger d-flex align-items-center" onclick="logoutAdmin()" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            @endif
             </div>
         </div>
     </div>
