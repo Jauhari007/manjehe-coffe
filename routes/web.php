@@ -13,6 +13,8 @@ Route::get('/products', [HomeController::class, 'products'])->name('products');
 Route::post('/contact', [HomeController::class, 'contact'])->name('contact.store');
 // Product detail (public)
 Route::get('/product/{product:product_id}', [HomeController::class, 'showProduct'])->name('product.show');
+// Order selection (choose admin WhatsApp)
+Route::get('/order/select', [HomeController::class, 'selectOrderAdmin'])->name('order.select');
 
 // Alias global untuk route('login') agar tidak error
 Route::get('/login', function() {

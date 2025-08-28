@@ -3,6 +3,13 @@
 @section('title', 'Dashboard - Manjehe Coffee Admin')
 @section('page_title', 'Dashboard')
 
+<link rel="icon" type="image/png" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="48x48" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/manjehe_logo.png') }}">
+<link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/manjehe_logo.png') }}">
 @section('page_subtitle', 'Selamat datang di panel admin Manjehe Coffee!')
 
 @section('content')
@@ -207,13 +214,19 @@
                         Kategori Produk
                     </h5>
                     
+                    @php
+                        $total = max($stats['total_products'] ?? 0, 0);
+                        $pctHot = $total ? round(($stats['hot_coffee'] / $total) * 100, 2) : 0;
+                        $pctCold = $total ? round(($stats['cold_coffee'] / $total) * 100, 2) : 0;
+                        $pctBeans = $total ? round(($stats['coffee_beans'] / $total) * 100, 2) : 0;
+                    @endphp
                     <div class="mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="text-light">Kopi Panas</span>
                             <strong class="text-danger">{{ $stats['hot_coffee'] }}</strong>
                         </div>
                         <div class="progress mb-3" style="height: 10px;">
-                            <div class="progress-bar bg-danger" style="width: {{ $stats['total_products'] > 0 ? ($stats['hot_coffee'] / $stats['total_products']) * 100 : 0 }}%"></div>
+                            <div class="progress-bar bg-danger" style="width: <?php echo $pctHot; ?>%;"></div>
                         </div>
                     </div>
 
@@ -223,7 +236,7 @@
                             <strong class="text-info">{{ $stats['cold_coffee'] }}</strong>
                         </div>
                         <div class="progress mb-3" style="height: 10px;">
-                            <div class="progress-bar bg-info" style="width: {{ $stats['total_products'] > 0 ? ($stats['cold_coffee'] / $stats['total_products']) * 100 : 0 }}%"></div>
+                            <div class="progress-bar bg-info" style="width: <?php echo $pctCold; ?>%;"></div>
                         </div>
                     </div>
 
@@ -233,7 +246,7 @@
                             <strong class="text-warning">{{ $stats['coffee_beans'] }}</strong>
                         </div>
                         <div class="progress" style="height: 10px;">
-                            <div class="progress-bar bg-warning" style="width: {{ $stats['total_products'] > 0 ? ($stats['coffee_beans'] / $stats['total_products']) * 100 : 0 }}%"></div>
+                            <div class="progress-bar bg-warning" style="width: <?php echo $pctBeans; ?>%;"></div>
                         </div>
                     </div>
                 </div>

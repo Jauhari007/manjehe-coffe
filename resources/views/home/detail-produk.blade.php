@@ -77,8 +77,8 @@
 				@endif
 
 				<div class="actions" style="display:flex;flex-wrap:wrap;gap:15px;align-items:center;">
-					<a href="{{ $product->whatsapp_url }}" target="_blank" class="order-btn" style="background:var(--whatsapp-green);color:#fff;padding:14px 28px;border-radius:40px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px;">
-						<i class="fab fa-whatsapp"></i> Order via WhatsApp
+					<a href="{{ route('order.select', ['product' => $product->name, 'price' => $product->price]) }}" class="order-btn" style="background:var(--whatsapp-green);color:#fff;padding:14px 28px;border-radius:40px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px;">
+						<i class="fab fa-whatsapp"></i> Pilih Admin
 					</a>
 					<button id="shareProduct" style="background:#222;color:#fff;padding:14px 24px;border-radius:40px;border:1px solid #333;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
 						<i class="fas fa-share-alt"></i> Share

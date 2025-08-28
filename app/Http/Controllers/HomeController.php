@@ -56,4 +56,12 @@ class HomeController extends Controller
         $product->load('images');
         return view('home.detail-produk', compact('product'));
     }
+
+    public function selectOrderAdmin(Request $request): View
+    {
+        $productName = $request->query('product');
+        $quantity = (int) $request->query('qty', 1);
+        $price = $request->query('price');
+        return view('home.select-admin', compact('productName','quantity','price'));
+    }
 }

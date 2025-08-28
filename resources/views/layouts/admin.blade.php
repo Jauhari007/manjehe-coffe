@@ -411,7 +411,7 @@
                 </button>
                 <div>
                     <h4 class="mb-0 text-white">@yield('page_title', 'Dashboard')</h4>
-                    <small class="text-muted">@yield('page_subtitle', 'Welcome back!')</small>
+                    <small class="text-white">@yield('page_subtitle', 'Welcome back!')</small>
                 </div>
             </div>
             
