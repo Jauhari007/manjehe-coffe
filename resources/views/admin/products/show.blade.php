@@ -382,16 +382,8 @@
                 </p>
                 <h2 class="mb-4">{{ $product->formatted_price }}</h2>
                 
-                <div class="mb-3">
-                    @if($product->is_active)
-                        <span class="badge bg-success fs-6 me-2">Aktif</span>
-                    @else
-                        <span class="badge bg-danger fs-6 me-2">Nonaktif</span>
-                    @endif
-                </div>
-                
                 <div class="mt-4">
-                    <a href="{{ $product->whatsapp_url }}" target="_blank" class="btn btn-success">
+                    <a href="{{ route('order.select', ['product' => $product->name, 'price' => $product->price]) }}" class="btn btn-success">
                         <i class="fab fa-whatsapp me-2"></i>
                         Pesan via WhatsApp
                     </a>

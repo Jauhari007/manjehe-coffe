@@ -22,8 +22,8 @@
         </p>
         @php
             $adminNumbers = [
-                ['name' => 'Admin 1','phone' => '6282334334737'],
-                ['name' => 'Admin 2','phone' => '6281233302500'],
+                ['name' => 'Admin 1','phone' => '6281233302500'],
+                ['name' => 'Admin 2','phone' => '6282334334737'],
             ];
             $baseMessage = $productName ? "Halo ${productName}, saya ingin memesan" : 'Halo Admin, saya ingin memesan produk kopi Manjehe';
             if($productName){
