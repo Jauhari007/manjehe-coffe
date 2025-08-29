@@ -36,7 +36,7 @@ class CoffeeProduct extends Model
     public function getWhatsappUrlAttribute()
     {
         $text = $this->whatsapp_text ?: "Halo Coffee Manjehe, saya ingin memesan {$this->name}";
-        return 'https://wa.me/6285923253597?text=' . urlencode($text);
+        return 'https://wa.me/6281233302500?text=' . urlencode($text);
     }
 
     public function scopeActive($query)

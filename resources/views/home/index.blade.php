@@ -91,12 +91,12 @@
                 <div class="about-text" data-aos="fade-right">
                     <div class="text-block">
                         <h3>Our Philosophy</h3>
-                        <p>Kopi Manjehe bukan sekadar minuman, ia adalah warisan rasa yang lahir dari kesederhanaan. Biji-biji pilihan disangrai dengan wajan besi dan kayu bakar, sebuah metode tradisional yang diwariskan turun-temurun. Api yang membara dari kayu bukan hanya memberikan panas, tapi juga menghadirkan aroma otentik yang tak bisa ditiru oleh mesin modern.</p>
+                        <p>Kopi Manjehe bukan sekadar minuman, ia adalah warisan rasa yang lahir dari kesederhanaan. Biji-biji pilihan disangrai dengan wajan tanah liat dan bara api menggunakan kayu cengkeh serta kayu kopi, sebuah metode tradisional yang diwariskan turun-temurun. Api yang membara dari kayu bukan hanya memberikan panas, tapi juga menghadirkan aroma otentik yang tak bisa ditiru oleh mesin modern.</p>
                     </div>
                     
                     <div class="text-block">
                         <h3>Premium Quality</h3>
-                        <p>Kami memilih biji kopi terbaik langsung dari perkebunan rakyat Kampunganyar-Banyuwangi, Setiap biji Kopi Manjehe diperlakukan dengan ketelitian dan kesabaran, menghadirkan kualitas premium yang tak hanya memanjakan lidah, tapi juga menghidupkan jiwa</p>
+                        <p>Kami memilih biji kopi terbaik langsung dari kebun rakyat Kampunganyar dan sekitar Lereng Ijen, Setiap biji Kopi Manjehe diperlakukan dengan ketelitian dan kesabaran, menghadirkan kualitas premium yang tak hanya memanjakan lidah, tapi juga menghidupkan jiwa</p>
                     </div>
                     
                     <div class="stats-grid">
