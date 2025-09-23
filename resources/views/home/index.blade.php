@@ -2524,7 +2524,7 @@ function initVideoReview() {
         videoWrapper.classList.add('playing');
         
         // Get video ID from data attribute
-        const videoId = videoThumbnail.getAttribute('data-video-id') || 'hpF9v_c9kXA?si=iYVBgYV9Gks3tZPN';
+        const videoId = videoThumbnail.getAttribute('data-video-id') || 'hpF9v_c9kXA?si=GjKMaKB3PqQ7Bh-N';
         
         // Create new iframe src with autoplay
         const newSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&mute=0`;
@@ -2735,7 +2735,7 @@ function initVideoReview() {
 window.playVideo = function(element) {
     const videoWrapper = element.closest('.video-wrapper');
     const iframe = videoWrapper.querySelector('iframe');
-    const videoId = element.getAttribute('data-video-id') || '3Ah5Jon9MiQ';
+    const videoId = element.getAttribute('data-video-id') || 'hpF9v_c9kXA?si=GjKMaKB3PqQ7Bh-N';
     
     // Add playing class
     videoWrapper.classList.add('playing');
