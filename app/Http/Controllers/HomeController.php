@@ -44,8 +44,8 @@ class HomeController extends Controller
             'phone' => 'nullable|string|max:20',
             'message' => 'required|string|max:1000',
         ]);
-
-        \App\Models\Contact::create($validated);
+    $validated['is_read'] = true;
+    \App\Models\Contact::create($validated);
 
         return redirect()->back()->with('success', 'Pesan Anda telah dikirim.');
     }
