@@ -340,15 +340,15 @@
         
         <div class="video-container">
             <div class="video-wrapper">
-                <div class="video-player" data-video-id="3Ah5Jon9MiQ" role="button" tabindex="0" aria-label="Play Coffee Manjehe Review Video">
+                <div class="video-player" data-video-id="hpF9v_c9kXA?si=GjKMaKB3PqQ7Bh-N" role="button" tabindex="0" aria-label="Play Coffee Manjehe Review Video">
                     <picture>
-                        <img class="video-thumb" src="https://i.ytimg.com/vi/3Ah5Jon9MiQ/hqdefault.jpg" alt="Coffee Manjehe Review" loading="lazy">
+                        <img class="video-thumb" src="https://i.ytimg.com/vi/hpF9v_c9kXA/hqdefault.jpg" alt="Coffee Manjehe Review" loading="lazy">
                     </picture>
                     <button class="video-play-btn" aria-label="Play video">
                         <span class="play-icon">▶</span>
                     </button>
                     <noscript>
-                        <a href="https://www.youtube.com/watch?v=3Ah5Jon9MiQ" target="_blank" rel="noopener" style="color:#fff;">Watch on YouTube</a>
+                        <a href="https://www.youtube.com/watch?v=hpF9v_c9kXA" target="_blank" rel="noopener" style="color:#fff;">Watch on YouTube</a>
                     </noscript>
                 </div>
             </div>
