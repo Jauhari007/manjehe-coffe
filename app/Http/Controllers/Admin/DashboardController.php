@@ -24,7 +24,7 @@ class DashboardController extends Controller
             $recent_products = CoffeeProduct::with('images')->latest()->take(5)->get();
             
             // Add contact messages data
-            $recentMessages = Contact::latest()->take(5)->get();
+            $recentMessages = Contact::latest()->take(20)->get();
             $unreadMessages = Contact::where('is_read', false)->count();
             
             return view('admin.dashboard', compact('stats', 'recent_products', 'recentMessages', 'unreadMessages'));
