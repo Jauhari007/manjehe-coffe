@@ -2524,7 +2524,7 @@ function initVideoReview() {
         videoWrapper.classList.add('playing');
         
         // Get video ID from data attribute
-        const videoId = videoThumbnail.getAttribute('data-video-id') || '3Ah5Jon9MiQ';
+        const videoId = videoThumbnail.getAttribute('data-video-id') || 'hpF9v_c9kXA?si=iYVBgYV9Gks3tZPN';
         
         // Create new iframe src with autoplay
         const newSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&mute=0`;
@@ -2545,7 +2545,7 @@ function initVideoReview() {
     
     // Video share functionality
     window.shareVideo = function() {
-        const videoUrl = 'https://youtu.be/3Ah5Jon9MiQ'; // Direct YouTube URL
+        const videoUrl = 'https://youtu.be/hpF9v_c9kXA'; // Direct YouTube URL
         const shareText = 'Lihat review Coffee Manjehe yang luar biasa ini! ☕';
         
         if (navigator.share) {
