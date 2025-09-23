@@ -449,25 +449,26 @@
                         <p>We'd love to hear from you</p>
                     </div>
                     
-                    <form class="message-form">
+                    <form class="message-form" method="POST" action="{{ route('contact.store') }}">
+                        @csrf
                         <div class="form-row">
                             <div class="form-group">
-                                <input type="text" id="name" required>
+                                <input type="text" id="name" name="name" required>
                                 <label for="name">Your Name</label>
                             </div>
                             <div class="form-group">
-                                <input type="email" id="email" required>
+                                <input type="email" id="email" name="email" required>
                                 <label for="email">Email Address</label>
                             </div>
                         </div>
                         
                         <div class="form-group">
-                            <input type="tel" id="phone" required>
+                            <input type="tel" id="phone" name="phone" required>
                             <label for="phone">Phone Number</label>
                         </div>
                         
                         <div class="form-group">
-                            <textarea id="message" rows="5" required></textarea>
+                            <textarea id="message" name="message" rows="5" required></textarea>
                             <label for="message">Your Message</label>
                         </div>
                         
