@@ -1726,6 +1726,70 @@ function handlePageLoad() {
     console.log('Coffee Manjehe website fully loaded!');
 }
 
+// ===== VIDEO SHARE FUNCTION =====
+function shareVideo() {
+    const videoUrl = 'https://www.youtube.com/watch?v=hpF9v_c9kXA';
+    const videoTitle = 'Coffee Manjehe Review';
+    const videoText = 'Saksikan review kopi Manjehe di YouTube!';
+
+    if (navigator.share) {
+        navigator.share({
+            title: videoTitle,
+            text: videoText,
+            url: videoUrl
+        }).catch(() => {
+            fallbackShareVideo(videoUrl, videoText);
+        });
+    } else {
+        fallbackShareVideo(videoUrl, videoText);
+    }
+}
+
+function fallbackShareVideo(videoUrl, videoText) {
+    const shareText = encodeURIComponent(videoText + ' ' + videoUrl);
+    const shareOptions = [
+        { name: 'WhatsApp', url: `https://wa.me/?text=${shareText}`, icon: 'fab fa-whatsapp' },
+        { name: 'Facebook', url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(videoUrl)}`, icon: 'fab fa-facebook' },
+        { name: 'Twitter', url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(videoUrl)}&text=${encodeURIComponent(videoText)}`, icon: 'fab fa-twitter' },
+    ];
+    const sharePopup = document.createElement('div');
+    sharePopup.className = 'share-popup';
+    sharePopup.innerHTML = `
+        <div class="share-popup-content">
+            <h4>Share Video</h4>
+            <div class="share-options">
+                ${shareOptions.map(option => 
+                    `<a href="${option.url}" target="_blank" class="share-option">
+                        <i class="${option.icon}"></i> ${option.name}
+                    </a>`
+                ).join('')}
+            </div>
+            <button class="close-share">Close</button>
+        </div>
+    `;
+    document.body.appendChild(sharePopup);
+    Object.assign(sharePopup.style, {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        background: 'rgba(0, 0, 0, 0.8)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: '100000'
+    });
+    sharePopup.querySelector('.close-share').addEventListener('click', () => {
+        sharePopup.remove();
+    });
+    sharePopup.addEventListener('click', (e) => {
+        if (e.target === sharePopup) {
+            sharePopup.remove();
+        }
+    });
+}
+
 // ===== ADD CSS STYLES =====
 function addVideoStyles() {
     if (document.querySelector('#video-styles')) return;
