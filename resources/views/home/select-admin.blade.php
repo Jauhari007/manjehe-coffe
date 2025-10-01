@@ -19,6 +19,12 @@
             @if($productName)
                 <br><strong>Produk:</strong> {{ $productName }} @if($quantity) (Qty: {{ $quantity }}) @endif
             @endif
+            <br><strong>Harga:</strong> Rp {{ number_format($price,0,',','.') }}
+            <br><strong>Catatan:</strong> Pastikan untuk menyertakan detail pesanan Anda saat menghubungi admin.
+            <br>  Anda juga dapat melakukan pembayaran melalui transfer bank ke salah satu rekening berikut
+            <br>  BNI : 12624602039 a.n. Sutiyami.
+            <br>  BCA Syariah : 0760018564 a.n. Sutiyami.
+            <br>  BRI : 6116 0102 6556 537 a.n. Sutiyami.
         </p>
         @php
             $adminNumbers = [
