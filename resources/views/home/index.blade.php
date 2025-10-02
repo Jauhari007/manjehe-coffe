@@ -223,20 +223,20 @@
                             @endif
                         </div>
                         <div class="product-bottom">
-                            <div class="price">
-                                <span class="current-price">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                            </div>
-                            <div class="product-actions-stack">
-                                <a href="{{ route('product.show', ['product' => $product->product_id ?: $product->id]) }}" class="detail-btn" title="Detail {{ $product->name }}">
+                            <div class="price-detail-row" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                <span class="current-price" style="font-size: 1.2rem; font-weight: bold; color: #d4a574;">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                <a href="{{ route('product.show', ['product' => $product->product_id ?: $product->id]) }}" class="detail-btn" title="Detail {{ $product->name }}" style="padding: 0.4rem 1.1rem; border-radius: 20px; background: #2c2217; color: #d4a574; border: 1px solid #d4a574; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
                                     <i class="fas fa-info-circle"></i>
                                     <span>Detail</span>
                                 </a>
-                                <a href="{{ route('order.select', ['product' => $product->name, 'price' => $product->price]) }}" 
-                                   class="whatsapp-btn">
-                                    <i class="fab fa-whatsapp"></i>
-                                    <span>Pilih Admin</span>
-                                </a>
                             </div>
+                        </div>
+                        <div style="width: 100%; margin-top: 0.5rem;">
+                                <a href="{{ route('order.select', ['product' => $product->name, 'price' => $product->price]) }}" 
+                                   class="whatsapp-btn" style="width: 100%; display: block; text-align: center; padding: 12px; box-sizing: border-box;">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>Pesan sekarang, Hubungi admin</span>
+                                </a>
                         </div>
                     </div>
                 </div>
@@ -3293,6 +3293,15 @@ function initVideoPlayer(){
     align-items: center;
     justify-content: center;
 }
+
+/* Ensure WhatsApp button is full width */
+.product-card .whatsapp-btn {
+    width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    text-decoration: none !important;
+}
+
 .video-wrapper{position:relative;}
 .video-player{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:20px;box-shadow:0 0 40px #000a;background:#111;cursor:pointer;}
 .video-player .video-thumb{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;filter:brightness(.7);transition:.4s;z-index:1;}
