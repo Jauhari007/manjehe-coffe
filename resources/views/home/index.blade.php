@@ -101,15 +101,11 @@
                     
                     <div class="stats-grid">
                         <div class="stat-item">
-                            <div class="stat-number" data-count="1000">0</div>
-                            <div class="stat-label">Happy Customers</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" data-count="50">0</div>
+                            <div class="stat-number" data-count="50">7</div>
                             <div class="stat-label">Coffee Varieties</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number" data-count="5">0</div>
+                            <div class="stat-number" data-count="5">10</div>
                             <div class="stat-label">Years Experience</div>
                         </div>
                     </div>
