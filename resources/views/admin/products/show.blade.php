@@ -576,7 +576,7 @@
                             <p class="mb-0 text-muted">
                                 <i class="fas fa-calendar me-1"></i>
                                 {{ $product->created_at->format('d F Y, H:i') }}
-                                ({{ $product->created_at->diffForHumans() }})
+                                ({{ optional($product->created_at)->diffForHumans() ?? 'N/A' }})
                             </p>
                         </div>
                         
@@ -585,7 +585,7 @@
                             <p class="mb-0 text-muted">
                                 <i class="fas fa-clock me-1"></i>
                                 {{ $product->updated_at->format('d F Y, H:i') }}
-                                ({{ $product->updated_at->diffForHumans() }})
+                                ({{ optional($product->updated_at)->diffForHumans() ?? 'N/A' }})
                             </p>
                         </div>
                     </div>

@@ -1531,14 +1531,21 @@ function initContactForm() {
     inputs.forEach(input => {
         // Input focus effects
         input.addEventListener('focus', () => {
-            input.parentElement.classList.add('focused');
+            if (input.parentElement) {
+                input.parentElement.classList.add('focused');
+            }
         });
         
         input.addEventListener('blur', () => {
-            if (!input.value.trim()) {
+            if (!input.value.trim() && input.parentElement) {
                 input.parentElement.classList.remove('focused');
+                input.classList.remove('error', 'success');
             }
         });
+        
+        if (input.value.trim() && input.parentElement) {
+            input.parentElement.classList.add('focused');
+        }
         
         // Real-time validation
         input.addEventListener('input', validateInput);
@@ -1551,73 +1558,106 @@ function initContactForm() {
 function validateInput(e) {
     const input = e.target;
     const value = input.value.trim();
+    const isRequired = input.hasAttribute('required');
     let isValid = true;
-    
+
     // Remove existing error classes
     input.classList.remove('error', 'success');
-    
+
+    if (!value) {
+        if (!isRequired) {
+            return true;
+        }
+
+        input.classList.add('error');
+        return false;
+    }
+
     // Validation rules
     switch (input.type) {
-        case 'email':
+        case 'email': {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             isValid = emailRegex.test(value);
             break;
-        case 'tel':
-            const phoneRegex = /^[\+]?[0-9]{10,15}$/;
-            isValid = phoneRegex.test(value.replace(/\s+/g, ''));
+        }
+        case 'tel': {
+            const phoneDigits = value.replace(/[^\d\+]/g, '');
+            const phoneRegex = /^\+?\d{9,15}$/;
+            isValid = phoneRegex.test(phoneDigits);
             break;
+        }
         default:
             isValid = value.length >= 2;
     }
-    
+
     // Apply validation classes
-    if (value && isValid) {
+    if (isValid) {
         input.classList.add('success');
-    } else if (value && !isValid) {
+    } else {
         input.classList.add('error');
     }
-    
+
     return isValid;
 }
 
 function handleFormSubmit(e) {
     e.preventDefault();
-    
+
     const form = e.target;
-    const formData = new FormData(form);
     const inputs = form.querySelectorAll('input, textarea');
     let isFormValid = true;
-    
-    // Validate all inputs
+
     inputs.forEach(input => {
         if (!validateInput({ target: input })) {
             isFormValid = false;
         }
     });
-    
+
     if (!isFormValid) {
         showNotification('Please fill in all fields correctly.', 'error');
         return;
     }
-    
-     // Simulate form submission
+
     const submitBtn = form.querySelector('.form-submit');
-    const originalText = submitBtn.innerHTML;
-    
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    submitBtn.disabled = true;
-    
-    setTimeout(() => {
-        showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+    const formData = new FormData(form);
+
+    if (submitBtn) {
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        submitBtn.disabled = true;
+    }
+
+    fetch(form.action, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+    })
+    .then(async response => {
+        if (!response.ok) {
+            throw await response.json().catch(() => ({ message: 'Terjadi kesalahan saat mengirim pesan.' }));
+        }
+
+        return response.json().catch(() => ({}));
+    })
+    .then(data => {
+        showNotification(data.message || 'Message sent successfully! We\'ll get back to you soon.', 'success');
         form.reset();
         inputs.forEach(input => {
             input.classList.remove('success', 'error');
-            input.parentElement.classList.remove('focused');
+            input.parentElement?.classList.remove('focused');
         });
-        
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-    }, 2000);
+    })
+    .catch(error => {
+        const message = error?.message || 'Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.';
+        showNotification(message, 'error');
+    })
+    .finally(() => {
+        if (submitBtn) {
+            submitBtn.innerHTML = '<span>Send Message</span><i class="fas fa-paper-plane"></i>';
+            submitBtn.disabled = false;
+        }
+    });
 }
 
 // ===== NOTIFICATION SYSTEM =====

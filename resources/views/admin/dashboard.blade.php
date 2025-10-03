@@ -173,34 +173,52 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="card-title text-white mb-0">
-                            <i class="fas fa-comments me-2 text-info"></i>
+                            <i class="fas fa-envelope"></i>
                             Pesan Terbaru
+                            @if($unreadMessages > 0)
+                            <span class="badge badge-warning ml-2">{{ $unreadMessages }} Baru</span>
+                            @endif
                         </h5>
-                        @if($unreadMessages > 0)
-                            <span class="badge badge-warning">{{ $unreadMessages }}</span>
-                        @endif
-                    </div>
-                    
-                    @if($recentMessages->count() > 0)
-                        <div class="messages-list">
-                            @foreach($recentMessages as $message)
-                                <div class="message-item mb-3 p-3 rounded {{ !$message->is_read ? 'bg-info bg-opacity-10 border border-info border-opacity-25' : '' }}">
+                        <a href="{{ route('admin.contacts.index') }}" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-eye"></i>
+                            Lihat Semua
+                        </a>
+                    </div>                    @if($recentMessages->count() > 0)
+                        <div class="messages-list" style="max-height: 400px; overflow-y: auto;">
+                            @foreach($recentMessages->take(5) as $message)
+                                <div class="message-item mb-3 p-3 rounded {{ !$message->is_read ? 'bg-warning bg-opacity-10 border border-warning border-opacity-25' : '' }}">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <h6 class="text-white mb-0">{{ $message->name }}</h6>
                                         @if(!$message->is_read)
-                                            <span class="badge badge-info">Baru</span>
+                                            <span class="badge badge-warning">Baru</span>
                                         @endif
                                     </div>
-                                    <p class="text-white-50 small mb-1">{{ $message->email }}</p>
-                                    <p class="text-light small mb-2">{{ Str::limit($message->message, 50) }}</p>
-                                    <small class="text-white-50">{{ $message->created_at->diffForHumans() }}</small>
+                                    <p class="text-white-50 small mb-1">
+                                        <i class="fas fa-envelope"></i> {{ $message->email }}
+                                        @if($message->phone)
+                                        <span class="mx-2">|</span>
+                                        <i class="fas fa-phone"></i> {{ $message->phone }}
+                                        @endif
+                                    </p>
+                                    <p class="text-light small mb-2">{{ Str::limit($message->message, 80) }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-white-50">
+                                            <i class="fas fa-clock"></i>
+                                            {{ optional($message->created_at)->diffForHumans() ?? 'N/A' }}
+                                        </small>
+                                        <a href="{{ route('admin.contacts.show', $message) }}" 
+                                           class="btn btn-sm btn-outline-light">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
                     @else
                         <div class="text-center py-4">
-                            <i class="fas fa-comments text-white-50 mb-3" style="font-size: 3rem;"></i>
-                            <p class="text-white-50">Belum ada pesan</p>
+                            <i class="fas fa-inbox text-white-50 mb-3" style="font-size: 3rem;"></i>
+                            <h6 class="text-white-50">Belum ada pesan</h6>
+                            <p class="text-white-50 small">Pesan dari pelanggan akan muncul di sini</p>
                         </div>
                     @endif
                 </div>
@@ -520,4 +538,69 @@
         transform: rotate(10deg) scale(1.1);
     }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto refresh messages every 30 seconds
+    setInterval(function() {
+        updateUnreadMessagesCount();
+    }, 30000);
+    
+    // Initial load
+    updateUnreadMessagesCount();
+});
+
+function updateUnreadMessagesCount() {
+    fetch('{{ route("admin.contacts.unreadCount") }}')
+        .then(response => response.json())
+        .then(data => {
+            // Update sidebar badge
+            const sidebarBadge = document.querySelector('.nav-item a[href*="contacts"] .badge');
+            if (data.count > 0) {
+                if (sidebarBadge) {
+                    sidebarBadge.textContent = data.count;
+                } else {
+                    // Create badge if it doesn't exist
+                    const contactLink = document.querySelector('.nav-item a[href*="contacts"]');
+                    if (contactLink) {
+                        const badge = document.createElement('span');
+                        badge.className = 'badge badge-warning ml-auto';
+                        badge.textContent = data.count;
+                        contactLink.appendChild(badge);
+                    }
+                }
+            } else {
+                if (sidebarBadge) {
+                    sidebarBadge.remove();
+                }
+            }
+            
+            // Update dashboard header badge
+            const dashboardBadge = document.querySelector('#unread-count');
+            const messagesTitle = document.querySelector('.card-title');
+            
+            if (data.count > 0) {
+                if (dashboardBadge) {
+                    dashboardBadge.textContent = data.count + ' Baru';
+                } else if (messagesTitle) {
+                    // Create badge if it doesn't exist
+                    const badge = document.createElement('span');
+                    badge.className = 'badge badge-warning ml-2';
+                    badge.id = 'unread-count';
+                    badge.textContent = data.count + ' Baru';
+                    messagesTitle.appendChild(badge);
+                }
+            } else {
+                if (dashboardBadge) {
+                    dashboardBadge.remove();
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error updating unread count:', error);
+        });
+}
+</script>
 @endpush

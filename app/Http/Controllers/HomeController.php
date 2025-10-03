@@ -36,7 +36,7 @@ class HomeController extends Controller
         return view('about', compact('stats'));
     }
 
-    public function contact(Request $request): RedirectResponse
+    public function contact(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -44,10 +44,20 @@ class HomeController extends Controller
             'phone' => 'nullable|string|max:20',
             'message' => 'required|string|max:1000',
         ]);
-    $validated['is_read'] = true;
-    \App\Models\Contact::create($validated);
 
-        return redirect()->back()->with('success', 'Pesan Anda telah dikirim.');
+        // Set pesan sebagai belum dibaca (false)
+        $validated['is_read'] = false;
+        
+        \App\Models\Contact::create($validated);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Pesan Anda telah dikirim. Terima kasih!'
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Pesan Anda telah dikirim. Terima kasih!');
     }
 
     public function showProduct(CoffeeProduct $product): View

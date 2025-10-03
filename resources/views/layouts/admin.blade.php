@@ -391,6 +391,18 @@
                         Coffee Products
                     </a>
                 </div>
+                <div class="nav-item {{ Request::routeIs('admin.contacts.*') ? 'active' : '' }}">
+                    <a class="nav-link d-flex align-items-center py-3 px-3" href="{{ route('admin.contacts.index') }}">
+                        <i class="fas fa-envelope me-3"></i>
+                        Pesan Pelanggan
+                        @php
+                            $unreadMessages = \App\Models\Contact::unread()->count();
+                        @endphp
+                        @if($unreadMessages > 0)
+                        <span class="badge badge-warning ml-auto">{{ $unreadMessages }}</span>
+                        @endif
+                    </a>
+                </div>
                 <div class="nav-item">
                     <a class="nav-link d-flex align-items-center py-3 px-3" href="{{ route('home') }}" target="_blank">
                         <i class="fas fa-external-link-alt me-3"></i>
@@ -558,6 +570,11 @@
     <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
+    
     @stack('scripts')
+    
+    <!-- Admin Notifications System -->
+    @include('admin.partials.notifications')
+    
 </body>
 </html>
